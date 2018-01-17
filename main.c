@@ -4,6 +4,7 @@
 #include <stdbool.h>
 #include "boardManager.h"
 #include "ruleManager.h"
+#include "playerManager.h"
 
 //argv[1] = Rules;
 //argv[2] = Board;
@@ -122,6 +123,15 @@ int main(int argc, char** argv) {
     int numOfPlayers = 3;
 
     char **board = createBoard(numOfPlayers, numOfSpaces, spacesOnBoard);
+    char *propertiesOwned[numOfSpaces/3];
+
+    struct playerManager players[numOfPlayers];
+    for(int i = 0; i < numOfPlayers; i++) {
+        players[i] = createPlayer(rules.startingCash, rules.startingCash, 0, propertiesOwned, numOfSpaces/3);
+        for(int j = 0; j < numOfSpaces/3; j++) {
+            printf("%s", players[i].propertiesOwned[j]);
+        }
+    }
 
     return 0;
 }
