@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "ruleManager.h"
 
@@ -17,6 +18,7 @@ void readInRules(char *argv, struct rulesProperties *rules) {
         printf("Unable to open file: %s", argv);
         exit(0);
     }
+
 
     //Begin of StrTok Examople
         char str[80] = "This is - www.tutorialspoint.com - website";
