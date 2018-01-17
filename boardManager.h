@@ -20,6 +20,8 @@ struct properties {
     int rentWHotel;
 };
 
+
+
 void readInBoard(char* boardFile, int *numOfSpaces);
 void readInSpaces(char* boardFile, struct properties spacesOnBoard[], const int numOfSpaces);
 

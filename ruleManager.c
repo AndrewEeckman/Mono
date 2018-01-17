@@ -4,6 +4,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "ruleManager.h"
 
@@ -16,7 +17,7 @@ void readInRules(char *argv, struct rulesProperties *rules) {
         printf("Unable to open file: %s", argv);
         exit(0);
     }
-
+    
     fscanf(fp, "Starting Cash: %d", &rules->startingCash);
 
     fscanf(fp, "Turn Limit (-1 for no turn limit): %d", &rules->turnLimit);
