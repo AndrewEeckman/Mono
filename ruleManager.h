@@ -6,18 +6,7 @@
 #define HOARDING_RULEMANAGER_H
 
 #include <stdbool.h>
-
-struct rulesProperties {
-    int startingCash;
-    int turnLimit;
-    int numOfPlayerToEndGame;
-    int propertySetMultiplier;
-    int numHousesBeforeHotels;
-    bool buildHousesEvenly;
-    bool putMoneyInFreeParking;
-    bool auctionProperties;
-    int salMultiLandingOnGo;
-};
+#include "structs.h"
 
 void readInRules(char *argv, struct rulesProperties *rules);
 

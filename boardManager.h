@@ -6,26 +6,13 @@
 #define HOARDING_BOARDMANAGER_H
 
 #include <stdbool.h>
-
-struct properties {
-    char *type;
-    int setID;
-    int intraID;
-    char *name;
-    int cost;
-    int houseCost;
-    int hotelCost;
-    int rent;
-    int rentWHouse;
-    int rentWHotel;
-};
-
+#include "structs.h"
 
 
 void readInBoard(char* boardFile, int *numOfSpaces);
 void readInSpaces(char* boardFile, struct properties spacesOnBoard[], const int numOfSpaces);
 
-char** createBoard(int numOfPlayers, int numOfSpaces, struct properties spacesOnBoard[]);
-void displayBoard(int numOfPlayers, int numOfSpaces, struct properties spacesOnBoard[]);
+struct boardManagement createBoard(int numOfPlayers, int numOfSpaces, struct properties spacesOnBoard[], struct playerManager players[]);
+void displayBoard(struct boardManagement board, int numOfPlayers, int numOfSpaces, struct properties spacesOnBoard[], struct playerManager players[]);
 
 #endif //HOARDING_BOARDMANAGER_H
