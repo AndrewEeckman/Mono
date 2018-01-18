@@ -6,6 +6,8 @@
 #include "ruleManager.h"
 #include "playerManager.h"
 
+#include "structs.h"
+
 //argv[1] = Rules;
 //argv[2] = Board;
 //argv[3] = Random
@@ -122,14 +124,18 @@ int main(int argc, char** argv) {
 
     int numOfPlayers = 3;
 
-    char **board = createBoard(numOfPlayers, numOfSpaces, spacesOnBoard);
+    //char **board = createBoard(numOfPlayers, numOfSpaces, spacesOnBoard);
     char *propertiesOwned[numOfSpaces/3];
 
     struct playerManager players[numOfPlayers];
+
     for(int i = 0; i < numOfPlayers; i++) {
-        players[i] = createPlayer(rules.startingCash, rules.startingCash, 0, propertiesOwned, numOfSpaces/3);
+        players[i].cashAmount = rules.startingCash;
+        players[i].netWorth = rules.startingCash;
+        players[i].boardPosition = 0;
+        players[i].numIdentifier = i;
         for(int j = 0; j < numOfSpaces/3; j++) {
-            printf("%s", players[i].propertiesOwned[j]);
+            players[i].propertiesOwned[i] = i + ": ";
         }
     }
 

@@ -6,13 +6,7 @@
 #define HOARDING_PLAYERMANAGER_H
 
 #include "boardManager.h"
-
-struct playerManager {
-    int cashAmount;
-    int netWorth;
-    int boardPosition; //FIXME: MAY NOT BE USED OR ACCESSED LIKE EVER
-    char *propertiesOwned[];
-};
+#include "structs.h"
 
 struct playerManager createPlayer(int cashAmount, int netWorth, int boardPosition, char* propertiesOwned[], const int NUM_OF_PLACEHOLDERS);
 

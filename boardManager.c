@@ -69,17 +69,27 @@ void readInSpaces(char *boardFile, struct properties spacesOnBoard[], const int 
     }
 }
 
-char** createBoard(int numOfPlayers, int numOfSpaces, struct properties spacesOnBoard[]) {
-    char** board = (char**) malloc(numOfSpaces * sizeof(char*));
-    for(int spaces = 0; spaces < numOfSpaces; ++spaces){
-        board[spaces] = (char*) malloc(3 * sizeof(char));
-        for (int col = 0; col < 3; ++col) {
-            board[spaces][col] = ' ';
+struct boardManagement createBoard(int numOfPlayers, int numOfSpaces, struct properties spacesOnBoard[], struct playerManager players[]) {
+    struct boardManagement board;
+
+    board.boardSpace[numOfSpaces].occupiedBy[numOfPlayers + (numOfPlayers - 1)];
+
+    for(int i = 0; i < numOfSpaces; i++) {
+        board.boardSpace[i].position = i;
+        board.boardSpace[i].name = *spacesOnBoard[i].name;
+        if(i == 0) {
+            board.boardSpace[i].occupied = true;
+            for (int j = 0; j < numOfPlayers; j++) {
+                board.boardSpace[i].occupiedBy[j] = players->numIdentifier + " ";
+            }
         }
     }
+
     return board;
 }
 
-void displayBoard(int numOfPlayers, int numOfSpaces, struct properties spacesOnBoard[]) {
+void displayBoard(struct boardManagement board, int numOfPlayers, int numOfSpaces, struct properties spacesOnBoard[], struct playerManager players[]) {
+    for(int i = 0; i < numOfSpaces; i++) {
 
+    }
 }
