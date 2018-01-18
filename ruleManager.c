@@ -10,33 +10,17 @@
 #include "ruleManager.h"
 
 void readInRules(char *argv, struct rulesProperties *rules) {
+    //Creates the file variable for containing stream and the declaring the delim character and creating the temp string
     FILE *fp;
 
+    //opens the file and sets it to the stream
     fp = fopen(argv, "r");
-
+    //Checks to see if file opening was SUCCess and andrew is a hoe
     if(fp == NULL) {
         printf("Unable to open file: %s", argv);
         exit(0);
     }
 
-
-    //Begin of StrTok Examople
-        char str[80] = "This is - www.tutorialspoint.com - website";
-        const char s[2] = "-";
-        char *token;
-
-        /* get the first token */
-        token = strtok(str, s);
-
-        /* walk through other tokens */
-        while( token != NULL ) {
-            printf( " %s\n", token );
-
-            token = strtok(NULL, s);
-        }
-
-        return(0);
-    //End of StrTok
 
     fscanf(fp, "Starting Cash: %d", &rules->startingCash);
 
