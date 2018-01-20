@@ -37,6 +37,102 @@ void readInBoard(char* boardFile, int *numOfSpaces) {
     }
 }
 
+
+void readInSpaces(char *boardFile, struct properties spacesOnBoard[], const int numOfSpaces) {
+    FILE *fp = fopen(boardFile, "r");
+
+    if(fp == NULL) {
+        printf("%s", boardFile);
+        return;
+    }
+
+    /*
+        Type, Set Id, Intraset Id, Name, Property Cost, House Cost, Hotel Cost, Rent, Rent with House, Rent With Hotel
+
+        Property, 0, 0, Asia, 100, 50, 50, 20, 60, 100
+
+     *//*
+
+
+    for(int i = 0; i < numOfSpaces; i++) {
+        if(i == 0) {
+            spacesOnBoard[i].type = "Go";
+            fscanf(fp, "Go,%d,%s", &spacesOnBoard[i].setID, spacesOnBoard[i].intraID);
+        }
+
+        spacesOnBoard[i].type = "Property";
+        fscanf(fp, "Property,%d,%s,%s,%d,%d,%d,%d,%d,%d", &spacesOnBoard[i].setID, spacesOnBoard[i].intraID, spacesOnBoard[i].name, &spacesOnBoard[i].cost,
+               &spacesOnBoard[i].houseCost, &spacesOnBoard[i].hotelCost, &spacesOnBoard[i].rent,
+               &spacesOnBoard[i].rentWHouse, &spacesOnBoard[i].rentWHotel);
+
+    }
+}
+*/
+
+int read_board(struct boardManager board, char* BOARD_FILENAME, int *totalNumOfProperties) {
+    char storage[10000];
+    char c;
+    FILE *fp;
+    int i = 0, counter = 0;
+
+    fp = fopen(BOARD_FILENAME, "r"); // FIXME - Get the board_file name from command line.
+
+    while (!feof(fp)) {
+        fscanf(fp, "%c", &c);
+        storage[i] = c;
+        i++;
+    }
+
+    char *tokens = strtok(storage, ",");
+    char *array[10000];
+    i = 0;
+    while (tokens != NULL) {
+        array[i++] = tokens;
+        tokens = strtok(NULL, ",");
+        counter++;
+    }
+
+    int propertyID_forName = 17;
+    int propertySetID_forName = 18;
+
+    int arrayPosition_forName = 19;
+    int arrayPosition_forPropertyCost = 20;
+    int arrayPosition_forRent = 23;
+
+    // Storing total number of properties
+    board.space->spaceType.property.inTotal = atoi(array[1]) - 1; // Number of properties without GO.
+    *totalNumOfProperties = atoi(array[1]) - 1; // Number of properties without GO.
+
+    board.boardSpace = malloc(numOfSpaces * sizeof(struct boardSpace));
+
+    // Storing GO-Name
+    board.space[0].spaceType.GO.name = array[15]; // FIXME - Will the *name pointer store whats in array[15].
+
+    // Storing other values
+    for (i = 0; i < *totalNumOfProperties; i++) {
+        // Storing names
+        board.space[atoi(array[propertyID_forName])].spaceType.property.setID[atoi(array[propertySetID_forName])].name = array[arrayPosition_forName];
+
+        // Storing Property Costs
+        board.space[atoi(array[propertyID_forName])].spaceType.property.setID[atoi(array[propertySetID_forName])].cost = atoi(array[arrayPosition_forPropertyCost]);
+
+        // Storing rent
+        board.space[atoi(array[propertyID_forName])].spaceType.property.setID[atoi(array[propertySetID_forName])].rent = atoi(array[arrayPosition_forRent]);
+
+        // Increase values inside file
+        arrayPosition_forName += 9;
+        arrayPosition_forPropertyCost += 9;
+        arrayPosition_forRent += 9;
+
+        // Increase values for property ID and setID
+        propertyID_forName += 9;
+        propertySetID_forName += 9;
+    }
+
+    fclose(fp);
+    return 0;
+}
+
 void displayBoard(struct boardManager board, int numOfSpaces, int numOfPlayers) {
     for(int i = 0; i < numOfSpaces; i++) {
         printf("%d ", i);
