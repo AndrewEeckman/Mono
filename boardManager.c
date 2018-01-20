@@ -70,27 +70,30 @@ void readInSpaces(char *boardFile, struct properties spacesOnBoard[], const int 
     }
 }
 
-struct boardManagement createBoard(int numOfPlayers, int numOfSpaces, struct properties spacesOnBoard[], struct playerManager players[]) {
-    struct boardManagement board;
+struct boardSpace* createBoard(int numOfPlayers, int numOfSpaces, struct properties spacesOnBoard[], struct playerManager players[]) {
 
-    board.boardSpace[numOfSpaces].occupiedBy[numOfPlayers + (numOfPlayers - 1)];
+    struct boardSpace board[numOfSpaces];
 
     for(int i = 0; i < numOfSpaces; i++) {
-        board.boardSpace[i].position = i;
-        board.boardSpace[i].name = *spacesOnBoard[i].name;
+        board[i].position = i;
+        board[i].placesOnBoard = spacesOnBoard[i];
+
         if(i == 0) {
-            board.boardSpace[i].occupied = true;
-            for (int j = 0; j < numOfPlayers; j++) {
-                board.boardSpace[i].occupiedBy[j] = players->numIdentifier + " ";
-            }
+            board[i].occupied = true;
+            board[i].occupiedBy = "0, 1, 2"; //FIXME: ADD CHARACTER SLOTS
+        } else {
+            board[i].occupied = false;
+            board[i].occupiedBy = "       "; //FIXME: ADD CHARACTER SLOTS
         }
     }
 
     return board;
 }
 
-void displayBoard(struct boardManagement board, int numOfPlayers, int numOfSpaces, struct properties spacesOnBoard[], struct playerManager players[]) {
+void displayBoard(struct boardSpace board[], int numOfSpaces) {
     for(int i = 0; i < numOfSpaces; i++) {
-
+        printf("%d\n ", board[i].position);
+        printf("| %s | \t", board[i].placesOnBoard.name);
+        printf("%s\n", board[i].occupiedBy);
     }
 }
