@@ -8,6 +8,8 @@
 #include "boardManager.h"
 #include "structs.h"
 
-struct playerManager createPlayer(int cashAmount, int netWorth, int boardPosition, char* propertiesOwned[], const int NUM_OF_PLACEHOLDERS);
+//struct playerManager createPlayer(int cashAmount, int netWorth, int boardPosition, char* propertiesOwned[], const int NUM_OF_PLACEHOLDERS);
+
+void createPlayers(struct boardManager *board, int *numOfPlayers);
 
 #endif //HOARDING_PLAYERMANAGER_H
