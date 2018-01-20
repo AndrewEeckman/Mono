@@ -3,19 +3,42 @@
 //
 
 #include "boardManager.h"
+#include "structs.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 void readInBoard(char* boardFile, int *numOfSpaces) {
     FILE *fp = fopen(boardFile, "r");
+    char delim = ',';     //Maybe only used for board file parsing
+    char *parsedString;   //Maybe only used for board file parsing
 
     if(fp == NULL) {
         printf("%s", boardFile);
         return;
     }
 
-    fscanf(fp, "Number of Spaces,%d",&(*numOfSpaces));
+    //Begin of StrTok Parsing [maybe only used for the board file parsing because of the excess of delim characters]
+
+    fscanf(fp, "Number of Spaces,%d", (numOfSpaces));
+
+    parsedString = strtok(fp, delim); // get parsedString from the stream
+
+    while( parsedString != NULL ) {     // parsing strings through the stream
+        parsedString = strtok(NULL, delim);
+        parsedString = *parsedString;
+        if( parsedString == "Type" || parsedString == "SetId" || parsedString == "IntrasetId" || parsedString =="Name" || parsedString =="PropertyCost" || parsedString =="HouseCost" || parsedString =="Hotel" || parsedString == "Cost" || parsedString == "Rent" || parsedString == "Rent with House" || parsedString =="Rent With Hotel") {
+
+        } else {
+
+        }
+
+    }
+
+
 }
+
+
 
 void readInSpaces(char *boardFile, struct properties spacesOnBoard[], const int numOfSpaces) {
     FILE *fp = fopen(boardFile, "r");

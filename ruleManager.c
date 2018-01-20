@@ -3,21 +3,26 @@
 //
 
 #include <stdio.h>
+#include <string.h>
 #include <stdlib.h>
 #include <string.h>
 
+#include "struct.h"
 #include "ruleManager.h"
 
 void readInRules(char *argv, struct rulesProperties *rules) {
+    //Creates the file variable for containing stream and the declaring the delim character and creating the temp string
     FILE *fp;
 
+    //opens the file and sets it to the stream
     fp = fopen(argv, "r");
-
+    //Checks to see if file opening was SUCCess and andrew is a hoe
     if(fp == NULL) {
         printf("Unable to open file: %s", argv);
         exit(0);
     }
-    
+
+
     fscanf(fp, "Starting Cash: %d", &rules->startingCash);
 
     fscanf(fp, "Turn Limit (-1 for no turn limit): %d", &rules->turnLimit);

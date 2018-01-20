@@ -5,6 +5,7 @@
 #include "boardManager.h"
 #include "ruleManager.h"
 #include "playerManager.h"
+#include "struct..h"
 
 #include "structs.h"
 
