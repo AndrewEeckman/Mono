@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdbool.h>
+
 #include "boardManager.h"
 #include "ruleManager.h"
 #include "playerManager.h"
@@ -12,6 +13,7 @@
 //argv[1] = Rules;
 //argv[2] = Board;
 //argv[3] = Random
+
 
 int main(int argc, char** argv) {
 
@@ -24,7 +26,7 @@ int main(int argc, char** argv) {
     printf("Starting Cash: %d\n", rules.startingCash);
     printf("Turn Limit (-1 for no turn limit): %d\n", rules.turnLimit);
     printf("Number of Players Left To End Game: %d\n", rules.numOfPlayerToEndGame);
-    printf("Property Set Multiplier: %d\n", rules.propertySetMultiplier);
+    printf("Property Set Multiplier: %d\n", rules.propertyTypeSetMultiplier);
     printf("Number of Houses Before Hotels: %d\n", rules.numHousesBeforeHotels);
     printf("Must Build Houses Evenly: %s\n", rules.buildHousesEvenly);
     printf("Put Money In Free Parking: %s\n", rules.putMoneyInFreeParking);
@@ -60,7 +62,8 @@ int main(int argc, char** argv) {
 
     struct rulesProperties rules;
 
-    struct properties spacesOnBoard[numOfSpaces];
+    struct boardManager board;
+
 
     rules.startingCash = 1500;
     rules.turnLimit = 10;
@@ -74,81 +77,85 @@ int main(int argc, char** argv) {
 
     //Type,Set Id,Intraset Id,Name,Property Cost,House Cost,Hotel Cost,Rent,Rent with House,Rent With Hotel
     //Property,0,0,Asia,100,50,50,20,60,100
+    
+    board.boardSpace = malloc(numOfSpaces * sizeof(struct boardSpace));
+    
 
-    spacesOnBoard[0].type = "Go";
-    spacesOnBoard[0].setID = 0;
-    spacesOnBoard[0].intraID = 99; //FIXME: REPLACE WITH TYPE/NAME
-    spacesOnBoard[0].name = "Go";
-    spacesOnBoard[0].cost = NULL;
-    spacesOnBoard[0].houseCost = NULL;
-    spacesOnBoard[0].hotelCost = NULL;
-    spacesOnBoard[0].rent = NULL;
-    spacesOnBoard[0].rentWHouse = NULL;
-    spacesOnBoard[0].rentWHotel = NULL;
+    board.boardSpace[0].spaceType.goType.type = "Go";
+    board.boardSpace[0].spaceType.goType.setID = 0;
+    board.boardSpace[0].spaceType.goType.intraID = "Go"; //FIXME: REPLACE WITH TYPE/NAME
 
-    spacesOnBoard[1].type = "Property";
-    spacesOnBoard[1].setID = 0;
-    spacesOnBoard[1].intraID = 0;
-    spacesOnBoard[1].name = "Redwood";
-    spacesOnBoard[1].cost = 100;
-    spacesOnBoard[1].houseCost = 50;
-    spacesOnBoard[1].hotelCost = 50;
-    spacesOnBoard[1].rent = 20;
-    spacesOnBoard[1].rentWHouse = 60;
-    spacesOnBoard[1].rentWHotel = 100;
+    board.boardSpace[1].spaceType.propertyType.type = "Property";
+    board.boardSpace[1].spaceType.propertyType.setID = 0;
+    board.boardSpace[1].spaceType.propertyType.intraID = 0;
+    board.boardSpace[1].spaceType.propertyType.name = "Redwood";
+    board.boardSpace[1].spaceType.propertyType.cost = 100;
+    board.boardSpace[1].spaceType.propertyType.houseCost = 50;
+    board.boardSpace[1].spaceType.propertyType.hotelCost = 50;
+    board.boardSpace[1].spaceType.propertyType.rent = 20;
+    board.boardSpace[1].spaceType.propertyType.rentWHouse = 60;
+    board.boardSpace[1].spaceType.propertyType.rentWHotel = 100;
 
-    spacesOnBoard[2].type = "Property";
-    spacesOnBoard[2].setID = 0;
-    spacesOnBoard[2].intraID = 1;
-    spacesOnBoard[2].name = "Cottonwood";
-    spacesOnBoard[2].cost = 150;
-    spacesOnBoard[2].houseCost = 50;
-    spacesOnBoard[2].hotelCost = 50;
-    spacesOnBoard[2].rent = 25;
-    spacesOnBoard[2].rentWHouse = 75;
-    spacesOnBoard[2].rentWHotel = 150;
+    board.boardSpace[2].spaceType.propertyType.type = "Property";
+    board.boardSpace[2].spaceType.propertyType.setID = 0;
+    board.boardSpace[2].spaceType.propertyType.intraID = 1;
+    board.boardSpace[2].spaceType.propertyType.name = "Cottonwood";
+    board.boardSpace[2].spaceType.propertyType.cost = 150;
+    board.boardSpace[2].spaceType.propertyType.houseCost = 50;
+    board.boardSpace[2].spaceType.propertyType.hotelCost = 50;
+    board.boardSpace[2].spaceType.propertyType.rent = 25;
+    board.boardSpace[2].spaceType.propertyType.rentWHouse = 75;
+    board.boardSpace[2].spaceType.propertyType.rentWHotel = 150;
 
-    spacesOnBoard[3].type = "Property";
-    spacesOnBoard[3].setID = 1;
-    spacesOnBoard[3].intraID = 0;
-    spacesOnBoard[3].name = "Potter";
-    spacesOnBoard[3].cost = 200;
-    spacesOnBoard[3].houseCost = 75;
-    spacesOnBoard[3].hotelCost = 75;
-    spacesOnBoard[3].rent = 40;
-    spacesOnBoard[3].rentWHouse = 120;
-    spacesOnBoard[3].rentWHotel = 200;
+    board.boardSpace[3].spaceType.propertyType.type = "Property";
+    board.boardSpace[3].spaceType.propertyType.setID = 1;
+    board.boardSpace[3].spaceType.propertyType.intraID = 0;
+    board.boardSpace[3].spaceType.propertyType.name = "Potter";
+    board.boardSpace[3].spaceType.propertyType.cost = 200;
+    board.boardSpace[3].spaceType.propertyType.houseCost = 75;
+    board.boardSpace[3].spaceType.propertyType.hotelCost = 75;
+    board.boardSpace[3].spaceType.propertyType.rent = 40;
+    board.boardSpace[3].spaceType.propertyType.rentWHouse = 120;
+    board.boardSpace[3].spaceType.propertyType.rentWHotel = 200;
 
-    spacesOnBoard[4].type = "Property";
-    spacesOnBoard[4].setID = 1;
-    spacesOnBoard[4].intraID = 1;
-    spacesOnBoard[4].name = "Wall";
-    spacesOnBoard[4].cost = 250;
-    spacesOnBoard[4].houseCost = 100;
-    spacesOnBoard[4].hotelCost = 100;
-    spacesOnBoard[4].rent = 70;
-    spacesOnBoard[4].rentWHouse = 150;
-    spacesOnBoard[4].rentWHotel = 250;
+    board.boardSpace[4].spaceType.propertyType.type = "Property";
+    board.boardSpace[4].spaceType.propertyType.setID = 1;
+    board.boardSpace[4].spaceType.propertyType.intraID = 1;
+    board.boardSpace[4].spaceType.propertyType.name = "Wall";
+    board.boardSpace[4].spaceType.propertyType.cost = 250;
+    board.boardSpace[4].spaceType.propertyType.houseCost = 100;
+    board.boardSpace[4].spaceType.propertyType.hotelCost = 100;
+    board.boardSpace[4].spaceType.propertyType.rent = 70;
+    board.boardSpace[4].spaceType.propertyType.rentWHouse = 150;
+    board.boardSpace[4].spaceType.propertyType.rentWHotel = 250;
 
     int numOfPlayers = 3;
+    int propertyRatio = numOfSpaces/3;
 
-    struct playerManager players[numOfPlayers];
+    board.player = malloc(numOfPlayers * sizeof(struct player));
 
-    char *propertiesOwned[numOfSpaces/3];
+    for(int a = 0; a < numOfPlayers; a++) {
+        board.player[a].propertiesOwned = (char **) malloc(propertyRatio * sizeof(char *));
+        for (int b = 0; b < propertyRatio; b++) {
+            board.player[a].propertiesOwned[b] = (char *) malloc(5 * sizeof(char));
 
-    for(int i = 0; i < numOfPlayers; i++) {
-        players[i].cashAmount = rules.startingCash;
-        players[i].netWorth = rules.startingCash;
-        players[i].boardPosition = 0;
-        players[i].numIdentifier = i;
-        for(int j = 0; j < numOfSpaces/3; j++) {
-            players[i].propertiesOwned[i] = i + ": ";
         }
     }
 
-    struct boardSpace board[numOfSpaces];
-    createBoard(&board, numOfPlayers, numOfSpaces, spacesOnBoard, players);
-    displayBoard(board, numOfSpaces);
+    for(int i = 0; i < numOfPlayers; i++) {
+        board.player[i].cashAmount = rules.startingCash;
+        board.player[i].netWorth = rules.startingCash;
+        board.player[i].boardPosition = 0;
+        board.player[i].numIdentifier = i;
+
+        for(int j = 0; j < propertyRatio; j++) {
+            board.player[i].propertiesOwned[j] = " ";
+        }
+
+        printf("\n");
+    }
+
+    displayBoard(board, numOfSpaces, numOfPlayers);
 
     return 0;
 }

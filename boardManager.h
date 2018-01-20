@@ -10,9 +10,8 @@
 
 
 void readInBoard(char* boardFile, int *numOfSpaces);
-void readInSpaces(char* boardFile, struct properties spacesOnBoard[], const int numOfSpaces);
+void readInSpaces(char* boardFile, const int numOfSpaces);
 
-void createBoard(struct boardSpace board[], int numOfPlayers, int numOfSpaces, struct properties spacesOnBoard[], struct playerManager players[]);
-void displayBoard(struct boardSpace board[], int numOfSpaces);
+void displayBoard(struct boardManager board, int numOfSpaces, int numOfPlayers);
 
 #endif //HOARDING_BOARDMANAGER_H

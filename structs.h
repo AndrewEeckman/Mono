@@ -17,15 +17,15 @@ struct rulesProperties {
     int salMultiLandingOnGo;
 };
 
-struct board {
+
+struct boardManager {
     struct boardSpace {
         struct spaceType {
             struct goType {
                 char *type;
                 int setID;
-                char intraID;
-            };
-
+                char *intraID;
+            }goType;
             struct propertyType {
                 char *type;
                 int setID;
@@ -37,18 +37,21 @@ struct board {
                 int rent;
                 int rentWHouse;
                 int rentWHotel;
-            };
-        };
-    };
+            }propertyType;
+
+        }spaceType;
+
+    }*boardSpace;
 
     struct player {
         int numIdentifier;
         int cashAmount;
         int netWorth;
         int boardPosition;
-        char *propertiesOwned[];
-    };
-};
+        char **propertiesOwned;
+
+    }*player;
+}boardManager;
 
 
 #endif //HOARDING_STRUCTS_H
