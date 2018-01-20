@@ -5,7 +5,7 @@
 #include "boardManager.h"
 #include "ruleManager.h"
 #include "playerManager.h"
-#include "struct..h"
+#include "structs.h"
 
 #include "structs.h"
 
@@ -146,7 +146,8 @@ int main(int argc, char** argv) {
         }
     }
 
-    struct boardSpace *board = createBoard(numOfPlayers, numOfSpaces, spacesOnBoard, players);
+    struct boardSpace board[numOfSpaces];
+    createBoard(&board, numOfPlayers, numOfSpaces, spacesOnBoard, players);
     displayBoard(board, numOfSpaces);
 
     return 0;

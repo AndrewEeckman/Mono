@@ -17,34 +17,38 @@ struct rulesProperties {
     int salMultiLandingOnGo;
 };
 
-struct properties {
-    char *type;
-    int setID;
-    int intraID;
-    char *name;
-    int cost;
-    int houseCost;
-    int hotelCost;
-    int rent;
-    int rentWHouse;
-    int rentWHotel;
-};
+struct board {
+    struct boardSpace {
+        struct spaceType {
+            struct goType {
+                char *type;
+                int setID;
+                char intraID;
+            };
 
-struct boardSpace {
-    int position;
-    struct properties placesOnBoard;
-    bool occupied;
-    char *occupiedBy;
-};
+            struct propertyType {
+                char *type;
+                int setID;
+                int intraID;
+                char *name;
+                int cost;
+                int houseCost;
+                int hotelCost;
+                int rent;
+                int rentWHouse;
+                int rentWHotel;
+            };
+        };
+    };
 
-struct playerManager {
-    int numIdentifier;
-    int cashAmount;
-    int netWorth;
-    int boardPosition; //FIXME: MAY NOT BE USED OR ACCESSED LIKE EVER
-    char *propertiesOwned[];
+    struct player {
+        int numIdentifier;
+        int cashAmount;
+        int netWorth;
+        int boardPosition;
+        char *propertiesOwned[];
+    };
 };
-
 
 
 #endif //HOARDING_STRUCTS_H
