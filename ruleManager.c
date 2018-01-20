@@ -59,4 +59,5 @@ bool changeToBool(char * string){
     else if (tolower(*string) == 'no') {
         return false;
     }
+    return false;
 }

@@ -10,7 +10,6 @@
 
 
 void readInBoard(char* boardFile, int *numOfSpaces);
-void readInSpaces(char* boardFile, const int numOfSpaces);
 
 void displayBoard(struct boardManager board, int numOfSpaces, int numOfPlayers);
 
