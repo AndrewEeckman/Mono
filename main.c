@@ -18,7 +18,21 @@ int main(int argc, char** argv) {
     /* FIXME: FIX READ IN FUNCTIONS
     readInBoard(argv[2], &numOfSpaces);
     readInRules(argv[1], &rules);
-
+    */
+    /*
+   struct rulesProperties {
+    int startingCash;
+    int turnLimit;
+    int numOfPlayerToEndGame;
+    int propertySetMultiplier;
+    int numHousesBeforeHotels;
+    bool buildHousesEvenly;         //NOT USING
+    bool putMoneyInFreeParking;     //NOT USING
+    bool auctionProperties;         //NOT USING
+    int salMultiLandingOnGo;
+};
+    */
+    /*
     printf("\n-----RULES-----\n\n");
 
     printf("Starting Cash: %d\n", rules.startingCash);

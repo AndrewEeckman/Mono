@@ -10,7 +10,7 @@
 
 void readInBoard(char* boardFile, int *numOfSpaces) {
     FILE *fp = fopen(boardFile, "r");
-    char delim = ',';     //Maybe only used for board file parsing
+    const char delim[2] = ",";     //Maybe only used for board file parsing
     char *parsedString;   //Maybe only used for board file parsing
 
     if(fp == NULL) {
@@ -18,18 +18,19 @@ void readInBoard(char* boardFile, int *numOfSpaces) {
         return;
     }
 
+    char *boardString = fgets(boardString, EOF, fp);    //used to convert the FILE* type to a char* for strtok compatability
+    fscanf(boardString, "Number of Spaces, %d", (numOfSpaces)); //Gets the first string and data out of the way
+
     //Begin of StrTok Parsing [maybe only used for the board file parsing because of the excess of delim characters]
-
-    fscanf(fp, "Number of Spaces,%d", (numOfSpaces));
-
-    parsedString = strtok(fp, delim); // get parsedString from the stream
-
+    parsedString = strtok(boardString, delim); // get parsedString from the stream
     while( parsedString != NULL ) {     // parsing 7strings through the stream
         parsedString = strtok(NULL, delim);
-        parsedString = *parsedString;
         if( parsedString == "Type" || parsedString == "SetId" || parsedString == "IntrasetId" || parsedString =="Name" || parsedString =="PropertyCost" || parsedString =="HouseCost" || parsedString =="Hotel" || parsedString == "Cost" || parsedString == "Rent" || parsedString == "Rent with House" || parsedString =="Rent With Hotel") {
+            //F'IN NOTHIN XD
+            break;
+        } else if (parsedString == "Go") {
 
-        } else {
+        } else if (parsedString == "Property") {
 
         }
 

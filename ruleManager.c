@@ -6,6 +6,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
 #include "struct.h"
 #include "ruleManager.h"
@@ -22,6 +23,7 @@ void readInRules(char *argv, struct rulesProperties *rules) {
         exit(0);
     }
 
+    char tempString[100] = "Yes";
 
     fscanf(fp, "Starting Cash: %d", &rules->startingCash);
 
@@ -33,11 +35,28 @@ void readInRules(char *argv, struct rulesProperties *rules) {
 
     fscanf(fp, "Number of Houses Before Hotels: %d", &rules->numHousesBeforeHotels);
 
-    fscanf(fp, "Must Build Houses Evenly: %s", rules->buildHousesEvenly);
+    fscanf(fp, "Must Build Houses Evenly: %s", tempString);
 
-    fscanf(fp, "Put Money In Free Parking: %s", rules->putMoneyInFreeParking);
+    rules->buildHousesEvenly =  changeToBool(tempString);
 
-    fscanf(fp, "Auction Properties: %s", rules->auctionProperties);
+    fscanf(fp, "Put Money In Free Parking: %s", tempString);
+
+    rules->putMoneyInFreeParking = changeToBool(tempString);
+
+    fscanf(fp, "Auction Properties: %s", tempString);
+
+    rules->auctionProperties = changeToBool(tempString);
 
     fscanf(fp, "Salary Multiplier For Landing On Go: %d", &rules->salMultiLandingOnGo);
+
+
+}
+
+bool changeToBool(char * string){
+    if (tolower(*string) == 'yes') {
+        return true;
+    }
+    else if (tolower(*string) == 'no') {
+        return false;
+    }
 }
