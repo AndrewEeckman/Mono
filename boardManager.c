@@ -24,7 +24,7 @@ void readInBoard(char* boardFile, int *numOfSpaces) {
 
     parsedString = strtok(fp, delim); // get parsedString from the stream
 
-    while( parsedString != NULL ) {     // parsing strings through the stream
+    while( parsedString != NULL ) {     // parsing 7strings through the stream
         parsedString = strtok(NULL, delim);
         parsedString = *parsedString;
         if( parsedString == "Type" || parsedString == "SetId" || parsedString == "IntrasetId" || parsedString =="Name" || parsedString =="PropertyCost" || parsedString =="HouseCost" || parsedString =="Hotel" || parsedString == "Cost" || parsedString == "Rent" || parsedString == "Rent with House" || parsedString =="Rent With Hotel") {
