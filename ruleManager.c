@@ -52,7 +52,7 @@ void readInRules(char *argv, struct rulesProperties *rules) {
 
 }
 
-bool changeToBool(char * string){2
+bool changeToBool(char * string){
     if (strcmp(*string, "yes") == 0 ) {
         return true;
     }
