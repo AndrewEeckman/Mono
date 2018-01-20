@@ -23,7 +23,7 @@ void readInRules(char *argv, struct rulesProperties *rules) {
         exit(0);
     }
 
-    char tempString[100] = "Yes";
+    char tempString[100];
 
     fscanf(fp, "Starting Cash: %d", &rules->startingCash);
 
@@ -52,8 +52,8 @@ void readInRules(char *argv, struct rulesProperties *rules) {
 
 }
 
-bool changeToBool(char * string){
-    if (tolower(*string) == 'yes') {
+bool changeToBool(char * string){2
+    if (strcmp(*string, "yes") == 0 ) {
         return true;
     }
     else if (tolower(*string) == 'no') {
