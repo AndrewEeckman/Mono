@@ -129,8 +129,11 @@ int main(int argc, char** argv) {
     board.boardSpace[4].spaceType.propertyType.rentWHouse = 150;
     board.boardSpace[4].spaceType.propertyType.rentWHotel = 250;
 
-    int numOfPlayers = 3;
+    int numOfPlayers = 0;
     int propertyRatio = numOfSpaces/3;
+
+    printf("How many players will be playing: ");
+    scanf("%d", &numOfPlayers);
 
     board.player = malloc(numOfPlayers * sizeof(struct player));
 
@@ -151,11 +154,14 @@ int main(int argc, char** argv) {
         for(int j = 0; j < propertyRatio; j++) {
             board.player[i].propertiesOwned[j] = " ";
         }
-
-        printf("\n");
     }
+    int i = 0;
 
-    displayBoard(board, numOfSpaces, numOfPlayers);
+    while(i < 10) {
+        displayBoard(board, numOfSpaces, numOfPlayers);
+        getMove(board, numOfPlayers, numOfSpaces);
+        i++;
+    }
 
     return 0;
 }
