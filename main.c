@@ -77,7 +77,7 @@ int main(int argc, char** argv) {
 
     //Type,Set Id,Intraset Id,Name,Property Cost,House Cost,Hotel Cost,Rent,Rent with House,Rent With Hotel
     //Property,0,0,Asia,100,50,50,20,60,100
-    
+    /*
     board.boardSpace = malloc(numOfSpaces * sizeof(struct boardSpace));
     
 
@@ -129,6 +129,7 @@ int main(int argc, char** argv) {
     board.boardSpace[4].spaceType.propertyType.rentWHouse = 150;
     board.boardSpace[4].spaceType.propertyType.rentWHotel = 250;
 
+     */
     int numOfPlayers = 0;
     int propertyRatio = numOfSpaces/3;
 
@@ -157,9 +158,9 @@ int main(int argc, char** argv) {
     }
     int i = 0;
 
-    while(i < 10) {
+    while(i < rules.turnLimit) {
         displayBoard(board, numOfSpaces, numOfPlayers);
-        getMove(board, numOfPlayers, numOfSpaces);
+        getMove(board, numOfPlayers, numOfSpaces, i % numOfPlayers);
         i++;
     }
 

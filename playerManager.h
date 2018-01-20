@@ -8,7 +8,7 @@
 #include "boardManager.h"
 #include "structs.h"
 
-void getMove(struct boardManager board, int numOfPlayers, int numOfSpaces);
+void getMove(struct boardManager board, int numOfPlayers, int numOfSpaces, int player);
 void movePlayer(struct boardManager board, int player, int numOfSpaces);
 
 #endif //HOARDING_PLAYERMANAGER_H
