@@ -14,10 +14,6 @@
 
 int main(int argc, char** argv) {
 
-    int numOfSpaces;
-
-    struct rulesProperties rules;
-
     /* FIXME: FIX READ IN FUNCTIONS
     readInBoard(argv[2], &numOfSpaces);
     readInRules(argv[1], &rules);
@@ -57,7 +53,11 @@ int main(int argc, char** argv) {
 
 
     //TEST CASES FOR WHEN FILE READING ISN'T WORKING PROPERLY
-    numOfSpaces = 5;
+
+
+    int numOfSpaces = 5;
+
+    struct rulesProperties rules;
 
     struct properties spacesOnBoard[numOfSpaces];
 
@@ -76,7 +76,14 @@ int main(int argc, char** argv) {
 
     spacesOnBoard[0].type = "Go";
     spacesOnBoard[0].setID = 0;
-    spacesOnBoard[0].intraID = atoi("Go");
+    spacesOnBoard[0].intraID = 99; //FIXME: REPLACE WITH TYPE/NAME
+    spacesOnBoard[0].name = "Go";
+    spacesOnBoard[0].cost = NULL;
+    spacesOnBoard[0].houseCost = NULL;
+    spacesOnBoard[0].hotelCost = NULL;
+    spacesOnBoard[0].rent = NULL;
+    spacesOnBoard[0].rentWHouse = NULL;
+    spacesOnBoard[0].rentWHotel = NULL;
 
     spacesOnBoard[1].type = "Property";
     spacesOnBoard[1].setID = 0;
@@ -124,10 +131,9 @@ int main(int argc, char** argv) {
 
     int numOfPlayers = 3;
 
-    //char **board = createBoard(numOfPlayers, numOfSpaces, spacesOnBoard);
-    char *propertiesOwned[numOfSpaces/3];
-
     struct playerManager players[numOfPlayers];
+
+    char *propertiesOwned[numOfSpaces/3];
 
     for(int i = 0; i < numOfPlayers; i++) {
         players[i].cashAmount = rules.startingCash;
@@ -138,6 +144,9 @@ int main(int argc, char** argv) {
             players[i].propertiesOwned[i] = i + ": ";
         }
     }
+
+    struct boardSpace *board = createBoard(numOfPlayers, numOfSpaces, spacesOnBoard, players);
+    displayBoard(board, numOfSpaces);
 
     return 0;
 }

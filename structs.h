@@ -32,9 +32,9 @@ struct properties {
 
 struct boardSpace {
     int position;
-    int name;
+    struct properties placesOnBoard;
     bool occupied;
-    char occupiedBy[];
+    char *occupiedBy;
 };
 
 struct playerManager {
@@ -44,12 +44,6 @@ struct playerManager {
     int boardPosition; //FIXME: MAY NOT BE USED OR ACCESSED LIKE EVER
     char *propertiesOwned[];
 };
-
-struct boardManagement {
-    struct boardSpace *boardSpace;
-    struct playerManager *players;
-};
-
 
 
 
