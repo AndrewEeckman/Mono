@@ -75,61 +75,11 @@ int main(int argc, char** argv) {
     rules.auctionProperties = true;
     rules.salMultiLandingOnGo = 1;
 
-    //Type,Set Id,Intraset Id,Name,Property Cost,House Cost,Hotel Cost,Rent,Rent with House,Rent With Hotel
-    //Property,0,0,Asia,100,50,50,20,60,100
-    /*
-    board.boardSpace = malloc(numOfSpaces * sizeof(struct boardSpace));
-    
+    int numOfProperties = 0;
 
-    board.boardSpace[0].spaceType.goType.type = "Go";
-    board.boardSpace[0].spaceType.goType.setID = 0;
-    board.boardSpace[0].spaceType.goType.intraID = "Go"; //FIXME: REPLACE WITH TYPE/NAME
+    readInBoard(&board, argv[2], &numOfProperties, &numOfSpaces);
 
-    board.boardSpace[1].spaceType.propertyType.type = "Property";
-    board.boardSpace[1].spaceType.propertyType.setID = 0;
-    board.boardSpace[1].spaceType.propertyType.intraID = 0;
-    board.boardSpace[1].spaceType.propertyType.name = "Redwood";
-    board.boardSpace[1].spaceType.propertyType.cost = 100;
-    board.boardSpace[1].spaceType.propertyType.houseCost = 50;
-    board.boardSpace[1].spaceType.propertyType.hotelCost = 50;
-    board.boardSpace[1].spaceType.propertyType.rent = 20;
-    board.boardSpace[1].spaceType.propertyType.rentWHouse = 60;
-    board.boardSpace[1].spaceType.propertyType.rentWHotel = 100;
 
-    board.boardSpace[2].spaceType.propertyType.type = "Property";
-    board.boardSpace[2].spaceType.propertyType.setID = 0;
-    board.boardSpace[2].spaceType.propertyType.intraID = 1;
-    board.boardSpace[2].spaceType.propertyType.name = "Cottonwood";
-    board.boardSpace[2].spaceType.propertyType.cost = 150;
-    board.boardSpace[2].spaceType.propertyType.houseCost = 50;
-    board.boardSpace[2].spaceType.propertyType.hotelCost = 50;
-    board.boardSpace[2].spaceType.propertyType.rent = 25;
-    board.boardSpace[2].spaceType.propertyType.rentWHouse = 75;
-    board.boardSpace[2].spaceType.propertyType.rentWHotel = 150;
-
-    board.boardSpace[3].spaceType.propertyType.type = "Property";
-    board.boardSpace[3].spaceType.propertyType.setID = 1;
-    board.boardSpace[3].spaceType.propertyType.intraID = 0;
-    board.boardSpace[3].spaceType.propertyType.name = "Potter";
-    board.boardSpace[3].spaceType.propertyType.cost = 200;
-    board.boardSpace[3].spaceType.propertyType.houseCost = 75;
-    board.boardSpace[3].spaceType.propertyType.hotelCost = 75;
-    board.boardSpace[3].spaceType.propertyType.rent = 40;
-    board.boardSpace[3].spaceType.propertyType.rentWHouse = 120;
-    board.boardSpace[3].spaceType.propertyType.rentWHotel = 200;
-
-    board.boardSpace[4].spaceType.propertyType.type = "Property";
-    board.boardSpace[4].spaceType.propertyType.setID = 1;
-    board.boardSpace[4].spaceType.propertyType.intraID = 1;
-    board.boardSpace[4].spaceType.propertyType.name = "Wall";
-    board.boardSpace[4].spaceType.propertyType.cost = 250;
-    board.boardSpace[4].spaceType.propertyType.houseCost = 100;
-    board.boardSpace[4].spaceType.propertyType.hotelCost = 100;
-    board.boardSpace[4].spaceType.propertyType.rent = 70;
-    board.boardSpace[4].spaceType.propertyType.rentWHouse = 150;
-    board.boardSpace[4].spaceType.propertyType.rentWHotel = 250;
-
-     */
     int numOfPlayers = 0;
     int propertyRatio = numOfSpaces/3;
 

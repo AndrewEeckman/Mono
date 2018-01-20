@@ -71,68 +71,85 @@ void readInSpaces(char *boardFile, struct properties spacesOnBoard[], const int 
 }
 */
 
-int read_board(struct boardManager board, char* BOARD_FILENAME, int *totalNumOfProperties) {
-    char storage[10000];
-    char c;
+void readInBoard(struct boardManager *board, char* fileName, int *numOfProperties, int *numOfSpaces) {
+    char charStorage[10000];
+    char characterPlaceholder;
     FILE *fp;
-    int i = 0, counter = 0;
+    int i = 0;
+    int j = 0;
 
-    fp = fopen(BOARD_FILENAME, "r"); // FIXME - Get the board_file name from command line.
+    fp = fopen(fileName, "r");
 
     while (!feof(fp)) {
-        fscanf(fp, "%c", &c);
-        storage[i] = c;
+        fscanf(fp, "%c", &characterPlaceholder);
+        charStorage[i] = characterPlaceholder;
         i++;
     }
 
-    char *tokens = strtok(storage, ",");
-    char *array[10000];
+    char *tokenScanned = strtok(charStorage, ",");
+    char *arrayOfFile[10000];
     i = 0;
-    while (tokens != NULL) {
-        array[i++] = tokens;
-        tokens = strtok(NULL, ",");
-        counter++;
+
+    while (tokenScanned != NULL) {
+        arrayOfFile[i++] = tokenScanned;
+        tokenScanned = strtok(NULL, ",");
+        j++;
     }
 
-    int propertyID_forName = 17;
-    int propertySetID_forName = 18;
+    int setIDPos = 8;
+    int intraSetIDPos = 9;
 
-    int arrayPosition_forName = 19;
-    int arrayPosition_forPropertyCost = 20;
-    int arrayPosition_forRent = 23;
+    int namePos = 10;
+    int costPos = 11;
+    int houseCostPos = 12;
+    int hotelCostPos = 13;
+    int rentPos = 14;
+    int rentWHousePos = 15;
+    int rentWHotelPos = 16;
 
     // Storing total number of properties
-    board.space->spaceType.property.inTotal = atoi(array[1]) - 1; // Number of properties without GO.
-    *totalNumOfProperties = atoi(array[1]) - 1; // Number of properties without GO.
+    //*numOfProperties = atoi(array[1]) - 1; // Number of properties without GO.
+    *numOfProperties = atoi(arrayOfFile[1]) - 1; // Number of properties without GO.
+    *numOfSpaces = *numOfProperties + 1;
 
-    board.boardSpace = malloc(numOfSpaces * sizeof(struct boardSpace));
+    (*board).boardSpace = malloc(*numOfSpaces * sizeof(struct boardSpace));
 
     // Storing GO-Name
-    board.space[0].spaceType.GO.name = array[15]; // FIXME - Will the *name pointer store whats in array[15].
+     // FIXME - Will the *name pointer store whats in array[15].
 
     // Storing other values
-    for (i = 0; i < *totalNumOfProperties; i++) {
+    for (i = 0; i <= *numOfProperties; i++) {
         // Storing names
-        board.space[atoi(array[propertyID_forName])].spaceType.property.setID[atoi(array[propertySetID_forName])].name = array[arrayPosition_forName];
 
-        // Storing Property Costs
-        board.space[atoi(array[propertyID_forName])].spaceType.property.setID[atoi(array[propertySetID_forName])].cost = atoi(array[arrayPosition_forPropertyCost]);
+        if(i == 0) {
+            (*board).boardSpace[0].spaceType.goType.name = arrayOfFile[15];
+            (*board).boardSpace[0].spaceType.goType.earnings = atoi(arrayOfFile[14]);
+            printf("%d\n\n\n", (*board).boardSpace[0].spaceType.goType.earnings);
+        } else {
+            (*board).boardSpace[i].spaceType.propertyType.setID = atoi(arrayOfFile[setIDPos]);
+            (*board).boardSpace[i].spaceType.propertyType.intraID = atoi(arrayOfFile[intraSetIDPos]);
+            (*board).boardSpace[i].spaceType.propertyType.name = arrayOfFile[namePos];
+            (*board).boardSpace[i].spaceType.propertyType.cost = atoi(arrayOfFile[costPos]);
+            (*board).boardSpace[i].spaceType.propertyType.houseCost = atoi(arrayOfFile[houseCostPos]);      //NOT USING / WORKING
+            (*board).boardSpace[i].spaceType.propertyType.hotelCost = atoi(arrayOfFile[hotelCostPos]);      //NOT USING / WORKING
+            (*board).boardSpace[i].spaceType.propertyType.rent = atoi(arrayOfFile[rentPos]);
+            (*board).boardSpace[i].spaceType.propertyType.rentWHouse = atoi(arrayOfFile[rentWHousePos]);    //NOT USING / WORKING
+            (*board).boardSpace[i].spaceType.propertyType.rentWHotel = atoi(arrayOfFile[rentWHotelPos]);    //NOT USING / WORKING
 
-        // Storing rent
-        board.space[atoi(array[propertyID_forName])].spaceType.property.setID[atoi(array[propertySetID_forName])].rent = atoi(array[arrayPosition_forRent]);
-
+            (*board).boardSpace[i].spaceType.propertyType.owned = false;
+            (*board).boardSpace[i].spaceType.propertyType.ownedBy = NULL;
+        }
         // Increase values inside file
-        arrayPosition_forName += 9;
-        arrayPosition_forPropertyCost += 9;
-        arrayPosition_forRent += 9;
+        namePos += 9;
+        costPos += 9;
+        rentPos += 9;
 
         // Increase values for property ID and setID
-        propertyID_forName += 9;
-        propertySetID_forName += 9;
+        setIDPos += 9;
+        intraSetIDPos += 9;
     }
 
     fclose(fp);
-    return 0;
 }
 
 
@@ -140,7 +157,7 @@ void displayBoard(struct boardManager board, int numOfSpaces, int numOfPlayers) 
     for(int i = 0; i < numOfSpaces; i++) {
         printf("%d ", i);
         if(i == 0){
-            printf("| %s |\t\t\t", board.boardSpace[i].spaceType.goType.intraID);
+            printf("| %s |\t\t\t", board.boardSpace[i].spaceType.goType.name);
         } else {
             printf("| %s |\t\t", board.boardSpace[i].spaceType.propertyType.name);
         }
