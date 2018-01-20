@@ -70,9 +70,7 @@ void readInSpaces(char *boardFile, struct properties spacesOnBoard[], const int 
     }
 }
 
-struct boardSpace* createBoard(int numOfPlayers, int numOfSpaces, struct properties spacesOnBoard[], struct playerManager players[]) {
-
-    struct boardSpace board[numOfSpaces];
+void createBoard(struct boardSpace board[], int numOfPlayers, int numOfSpaces, struct properties spacesOnBoard[], struct playerManager players[]) {
 
     for(int i = 0; i < numOfSpaces; i++) {
         board[i].position = i;
@@ -86,14 +84,19 @@ struct boardSpace* createBoard(int numOfPlayers, int numOfSpaces, struct propert
             board[i].occupiedBy = "       "; //FIXME: ADD CHARACTER SLOTS
         }
     }
-
-    return board;
 }
 
 void displayBoard(struct boardSpace board[], int numOfSpaces) {
     for(int i = 0; i < numOfSpaces; i++) {
-        printf("%d\n ", board[i].position);
-        printf("| %s | \t", board[i].placesOnBoard.name);
+
+        printf("%d ", board[i].position);
+        printf("| %s |", board[i].placesOnBoard.name);
+
+
+        for(int j = 0; j < 5-(strlen(board[i].placesOnBoard.name)/3); j++) {
+            printf("\t");
+        }
+
         printf("%s\n", board[i].occupiedBy);
     }
 }
