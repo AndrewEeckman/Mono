@@ -19,7 +19,7 @@ struct rulesProperties {
 
 
 struct boardManager {
-    struct boardSpace {
+    struct boardSpace { //array
         struct spaceType {
             struct goType {
                 char *type;
