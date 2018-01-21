@@ -9,6 +9,7 @@
 #include <string.h>
 
 void readInBoard(char* boardFile, int *numOfSpaces) {
+    /*
     FILE *fp = fopen(boardFile, "r");
     const char delim[2] = ",";     //Maybe only used for board file parsing
     char *parsedString;   //Maybe only used for board file parsing
@@ -36,16 +37,19 @@ void readInBoard(char* boardFile, int *numOfSpaces) {
 
     }
 }
+*/
+}
+/*
+void readInSpaces(char *boardFile, struct properties *spacesOnBoard[], const int numOfSpaces) {
 
-
-void readInSpaces(char *boardFile, struct properties spacesOnBoard[], const int numOfSpaces) {
     FILE *fp = fopen(boardFile, "r");
 
     if(fp == NULL) {
         printf("%s", boardFile);
         return;
-    }
 
+    }
+*/
     /*
         Type, Set Id, Intraset Id, Name, Property Cost, House Cost, Hotel Cost, Rent, Rent with House, Rent With Hotel
 
@@ -68,7 +72,7 @@ void readInSpaces(char *boardFile, struct properties spacesOnBoard[], const int 
     }
 }
 */
-
+/*
 int read_board(struct boardManager board, char* BOARD_FILENAME, int *totalNumOfProperties) {
     char storage[10000];
     char c;
@@ -151,3 +155,4 @@ void displayBoard(struct boardManager board, int numOfSpaces, int numOfPlayers) 
         printf("\n");
     }
 }
+ */

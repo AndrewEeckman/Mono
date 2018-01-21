@@ -72,13 +72,18 @@ int main(int argc, char** argv) {
     //TEST CASES FOR WHEN FILE READING ISN'T WORKING PROPERLY
 
 
-    int numOfSpaces = 5;
+    //int numOfSpaces = 5;
 
     struct rulesProperties rules;
 
-    struct boardManager board;
+    //struct boardManager board;
 
+    readInRules(argv[1], &rules);
 
+    int *randNum;
+    readInRand(argv[3], &randNum);
+
+    /*
     rules.startingCash = 1500;
     rules.turnLimit = 10;
     rules.numOfPlayerToEndGame = 1;
@@ -88,6 +93,7 @@ int main(int argc, char** argv) {
     rules.putMoneyInFreeParking = false;
     rules.auctionProperties = true;
     rules.salMultiLandingOnGo = 1;
+     */
 
     //Type,Set Id,Intraset Id,Name,Property Cost,House Cost,Hotel Cost,Rent,Rent with House,Rent With Hotel
     //Property,0,0,Asia,100,50,50,20,60,100
@@ -144,6 +150,7 @@ int main(int argc, char** argv) {
     board.boardSpace[4].spaceType.propertyType.rentWHotel = 250;
 
      */
+    /*
     int numOfPlayers = 0;
     int propertyRatio = numOfSpaces/3;
 
@@ -179,4 +186,5 @@ int main(int argc, char** argv) {
     }
 
     return 0;
+    */
 }
