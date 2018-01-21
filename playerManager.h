@@ -8,8 +8,8 @@
 #include "boardManager.h"
 #include "structs.h"
 
-void getMove(struct boardManager board, int numOfPlayers, int numOfSpaces, int player);
-void movePlayer(struct boardManager board, int player, int numOfSpaces);
+void getMove(struct boardManager board, int numOfPlayers, int numOfSpaces, int player, int ** randNum);
+void movePlayer(struct boardManager board, int player, int numOfSpaces, int ** randNum);
 void readInRand(char * argv, int ** randNum);
 void inspectPlayer(struct boardManager board, int numOfPlayers, int numOfSpaces, int player);
 

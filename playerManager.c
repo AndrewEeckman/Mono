@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include "structs.h"
 
-void getMove(struct boardManager board, int numOfPlayers, int numOfSpaces, int player) {
+void getMove(struct boardManager board, int numOfPlayers, int numOfSpaces, int player, int ** randNum) {
     int playerAction = 0;
 
     printf("\nPlayer %d please choose an action\n", player);
@@ -15,7 +15,7 @@ void getMove(struct boardManager board, int numOfPlayers, int numOfSpaces, int p
     scanf("%d", &playerAction);
 
     if(playerAction == 1) {
-        movePlayer(board, player, numOfSpaces);
+        movePlayer(board, player, numOfSpaces, randNum);
 
     } else if(playerAction == 2) {
         inspectPlayer(board, numOfPlayers, numOfSpaces, player);
@@ -69,10 +69,25 @@ void inspectPlayer(struct boardManager board, int numOfPlayers, int numOfSpaces,
     }
 }
 
-void movePlayer(struct boardManager board, int player, int numOfSpaces) {
-    int diceRoll = (rand() % 12) + 1;
+void movePlayer(struct boardManager board, int player, int numOfSpaces, int ** randNum) {
+    int diceRoll1 = ((*randNum)[0] % 6) + 1;
+    for(int i = 0; i < sizeof((*randNum)); i ++){
+        (*randNum)[i]= (*randNum)[i+1];
+    }
+    *randNum = realloc(*randNum, (sizeof(*randNum)-1) * sizeof(int));
+
+    int diceRoll2 = ((*randNum)[0] % 6) + 1;
+    //Delete the random number just used from the array
+    for(int i = 0; i < sizeof((*randNum)); i ++){
+        (*randNum)[i]= (*randNum)[i+1];
+    }
+    *randNum = realloc(*randNum, (sizeof(*randNum)-1) * sizeof(int));
+
+    int diceRoll = diceRoll1 + diceRoll2;
+
     printf("You rolled a %d\n", diceRoll);
 
+    /*
     if(diceRoll + board.player[player].boardPosition < numOfSpaces) {
         board.player[player].boardPosition = board.player[player].boardPosition + diceRoll;
 
@@ -87,4 +102,5 @@ void movePlayer(struct boardManager board, int player, int numOfSpaces) {
     if(board.player[player].boardPosition == 0) {
         board.player[player].cashAmount;
     }
+     */
 }

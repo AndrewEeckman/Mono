@@ -131,7 +131,7 @@ int main(int argc, char** argv) {
 
     while(i < rules.turnLimit) {
         displayBoard(board, numOfSpaces, numOfPlayers);
-        getMove(board, numOfPlayers, numOfSpaces, i % numOfPlayers);
+        getMove(board, numOfPlayers, numOfSpaces, i % numOfPlayers, &randNum);
         i++;
     }
 
