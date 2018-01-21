@@ -17,8 +17,8 @@ void getMove(struct boardManager board, struct rulesProperties rules, int numOfP
         displayBoard(board, numOfSpaces, numOfPlayers);
 
         printf("\nPlayer %d please choose an action\n", player);
-        if(rolled == false) printf("1: Roll Dice\n2: Inspect Player\n3: Leave Game\nYour action: ");
-        if(rolled == true)  printf("1: End Turn\n2: Inspect Player\n3: Leave Game\nYour action: ");
+        if(rolled == false) printf("1: Roll Dice\n2: Inspect Player\n3: Leave Game\nYour action: \n");
+        if(rolled == true)  printf("1: End Turn\n2: Inspect Player\n3: Leave Game\nYour action: \n");
 
         scanf("%d", &playerAction);
 
@@ -33,7 +33,7 @@ void getMove(struct boardManager board, struct rulesProperties rules, int numOfP
             inspectPlayer(board, rules, numOfPlayers, numOfSpaces, player);
 
         } else if (playerAction == 3) {
-            leaveGame(board, rules, numOfPlayers, numOfSpaces, player);
+            leaveGame(board, rules, numOfSpaces, player);
             turnOver = true;
         }
     }
@@ -96,6 +96,51 @@ void movePlayer(struct boardManager board, struct rulesProperties rules, int pla
     } else {
         board.player[player].boardPosition = numOfSpaces-1;
     }
+
+    int currentPos = board.player[player].boardPosition;
+    int rentOfPos = board.boardSpace[currentPos].spaceType.propertyType.rent;
+    char choice = ' ';
+
+    if(board.boardSpace[currentPos].spaceType.propertyType.owned == true) {
+        //printf("The rent on this property is $%d\n", rentOfPos);
+        //printf("You currently have $%d\n", board.player[player].cashAmount);
+
+        if((board.player[player].cashAmount - rentOfPos) < 0) {
+            printf("Player %d went bankrupt to Player %d", player, board.boardSpace[currentPos].spaceType.propertyType.ownedBy);
+            board.player[board.boardSpace[currentPos].spaceType.propertyType.ownedBy].cashAmount = board.player[player].cashAmount;
+            //FIXME: TRANSFER PROPERTIES OVER TO NEW PLAYER
+            leaveGame(board, rules, numOfSpaces, player);
+
+        } else {
+            board.player[player].cashAmount -= rentOfPos;
+            board.player[board.boardSpace[currentPos].spaceType.propertyType.ownedBy].cashAmount += rentOfPos;
+            printf("Player %d payed Player %d $%d for landing on %s\n", player,
+                   board.boardSpace[currentPos].spaceType.propertyType.ownedBy, rentOfPos,
+                   board.boardSpace[currentPos].spaceType.propertyType.name);
+        }
+
+    } else if(board.boardSpace[currentPos].spaceType.propertyType.owned == false) {
+        if(board.boardSpace[currentPos].spaceType.propertyType.cost > board.player[player].cashAmount) {
+            printf("Player %d you do not have enough money to purchase %s\n", player, board.boardSpace[currentPos].spaceType.propertyType.name);
+            printf("%s costs $%d, but you only have $%d", board.boardSpace[currentPos].spaceType.propertyType.name, board.boardSpace[currentPos].spaceType.propertyType.cost, board.player[player].cashAmount);
+        } else {
+            printf("Player %d would you like to buy %s for $%d\n", player,
+                   board.boardSpace[currentPos].spaceType.propertyType.name,
+                   board.boardSpace[currentPos].spaceType.propertyType.cost);
+            printf("The rent on this property is $%d\n", rentOfPos);
+            printf("You currently have $%d\n", board.player[player].cashAmount);
+            printf("Y for yes, N for no: \n");
+            scanf(" %c", &choice);
+        }
+
+        if(choice == 'Y' || choice == 'y') {
+            board.player[player].cashAmount -= board.boardSpace[currentPos].spaceType.propertyType.cost;
+            board.boardSpace[currentPos].spaceType.propertyType.owned = true;
+            board.boardSpace[currentPos].spaceType.propertyType.ownedBy = board.player[player].numIdentifier;
+        }
+    }
+
+    printf("\n");
 }
 
 void inspectPlayer(struct boardManager board, struct rulesProperties rules, int numOfPlayers, int numOfSpaces, int player) {
@@ -115,16 +160,28 @@ void inspectPlayer(struct boardManager board, struct rulesProperties rules, int 
     printf("Player %d\n", playerToBeInspected);
     printf(" Cash: %d\n", board.player[playerToBeInspected].cashAmount);
     printf(" Properties Owned: \n");
+    int propertyCounter = 0;
+
+    //Add Properties Owned by Player
+    for(int i = 0; i < numOfSpaces-1; i++) {
+        if(board.boardSpace[i].spaceType.propertyType.ownedBy == board.player[playerToBeInspected].numIdentifier) {
+            board.player[playerToBeInspected].propertySlots[propertyCounter] = board.boardSpace[i].spaceType.propertyType.name;
+            propertyCounter++;
+        }
+    }
+
     for(int i = 0; i < numOfSpaces/3; i++) {
         printf("  %d:%s\n", i, board.player[i].propertySlots[i]);
     }
+
+    printf("\n");
 }
 
-void leaveGame(struct boardManager board, struct rulesProperties rules, int numOfPlayers, int numOfSpaces, int player) {
+void leaveGame(struct boardManager board, struct rulesProperties rules, int numOfSpaces, int player) {
     board.player[player].inGame = false;
 
-    board.player[player].numIdentifier = NULL;
-    board.player[player].boardPosition = NULL;
+    board.player[player].numIdentifier = (int)NULL;
+    board.player[player].boardPosition = (int)NULL;
     board.player[player].netWorth = 0;
     board.player[player].cashAmount = 0;
     board.player[player].propertySlots = NULL;

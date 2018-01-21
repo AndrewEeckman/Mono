@@ -52,7 +52,6 @@ struct boardManager {
         int netWorth;
         int boardPosition;
         char **propertySlots;
-        struct propertyType *propertiesOwned;
 
         bool inGame;
 

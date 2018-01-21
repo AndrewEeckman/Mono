@@ -8,6 +8,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+//FIXME: REWORK FILE
+
 void readInBoard(struct boardManager *board, char* fileName, int *numOfProperties, int *numOfSpaces) {
     char charStorage[10000];
     char characterPlaceholder;
@@ -73,7 +75,7 @@ void readInBoard(struct boardManager *board, char* fileName, int *numOfPropertie
             (*board).boardSpace[i].spaceType.propertyType.rentWHotel = atoi(arrayOfFile[rentWHotelPos]);    //NOT USING / WORKING
 
             (*board).boardSpace[i].spaceType.propertyType.owned = false;
-            (*board).boardSpace[i].spaceType.propertyType.ownedBy = NULL;
+            (*board).boardSpace[i].spaceType.propertyType.ownedBy = (int)NULL;
         }
         // Increase values inside file
         namePos += 9;

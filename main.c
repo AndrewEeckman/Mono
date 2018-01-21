@@ -17,7 +17,6 @@
 
 int main(int argc, char** argv) {
 
-
     struct rulesProperties rules;
 
     struct boardManager board;
