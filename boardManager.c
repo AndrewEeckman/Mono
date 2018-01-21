@@ -75,7 +75,7 @@ void readInBoard(struct boardManager *board, char* fileName, int *numOfPropertie
             (*board).boardSpace[i].propertyType.rentWHotel = atoi(arrayOfFile[rentWHotelPos]);    //NOT USING / WORKING
 
             (*board).boardSpace[i].propertyType.owned = false;
-            (*board).boardSpace[i].propertyType.ownedBy = (int)NULL;
+            (*board).boardSpace[i].propertyType.ownedBy = -1;
         }
         // Increase values inside file
         namePos += 9;

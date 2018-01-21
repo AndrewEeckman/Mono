@@ -173,7 +173,32 @@ void inspectPlayer(struct boardManager board, struct rulesProperties rules, int 
     printf(" Cash: %d\n", board.player[playerToBeInspected].cashAmount);
     printf(" Properties Owned: \n");
 
-    //FIXME: ADD OWNED PROPERTIES
+    int numOfSets = board.boardSpace[numOfSpaces-1].propertyType.setID + 1;
+
+    int count = 0;
+
+    for(int i = 0; i < numOfSets; i++) {
+        printf("\t%d: ", i);
+
+        for(int j = 1; j < numOfSpaces; j++) {
+
+            if(board.boardSpace[j].propertyType.setID == i) {
+
+                if (board.boardSpace[j].propertyType.ownedBy == board.player[playerToBeInspected].numIdentifier) {
+
+                    if(count >= 1) {
+                        printf(" | ");
+                    }
+
+                    printf("%s", board.boardSpace[j].propertyType.name);
+                    count++;
+                }
+            }
+        }
+
+        printf("\n");
+        count = 0;
+    }
 
     printf("\n");
 }

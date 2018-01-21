@@ -93,37 +93,31 @@ void whoWins(struct boardManager board, struct rulesProperties rules, int numPla
 
     } else {
 
-        for(int i = 0; i < numOfProperties; i++) {
-            for(int j = 0; j < numOfPlayersLeft; j++) {
-                if (board.boardSpace[i].spaceType.propertyType.ownedBy == arrayOfPlayersLeft[j]) {
-                    board.player[arrayOfPlayersLeft[j]].netWorth += board.boardSpace[i].spaceType.propertyType.cost;
-                }
-            }
-        }
 
         for(int j = 0; j < numOfPlayersLeft; j++) {
             board.player[arrayOfPlayersLeft[j]].netWorth += board.player[arrayOfPlayersLeft[j]].cashAmount;
         }
 
-        int numIDofWinner = 0;
         int numOfWinners = 1;
 
+        int maxPlayer = 0;
+
         for(int k = 1; k < numOfPlayersLeft; k++) {
-            if(board.player[arrayOfPlayersLeft[k]].netWorth > board.player[arrayOfPlayersLeft[k-1]].netWorth) {
-                numIDofWinner = board.player[arrayOfPlayersLeft[k]].numIdentifier;
+            if(board.player[arrayOfPlayersLeft[k]].netWorth > board.player[arrayOfPlayersLeft[maxPlayer]].netWorth) {
+                maxPlayer = board.player[arrayOfPlayersLeft[k]].numIdentifier;
             } else if(board.player[arrayOfPlayersLeft[k]].netWorth == board.player[arrayOfPlayersLeft[k-1]].netWorth) {
                 numOfWinners++;
             }
         }
 
         if(numOfWinners == 1) {
-            printf("The winner is Player %d", numIDofWinner);
+            printf("The winner is Player %d", board.player[maxPlayer].numIdentifier);
         } else {
             int arrayOfWinners[numOfWinners];
             for(int k = 1; k < numOfPlayersLeft; k++) {
                 if(board.player[arrayOfPlayersLeft[k]].netWorth == board.player[arrayOfPlayersLeft[k-1]].netWorth) {
                     arrayOfWinners[k] = board.player[arrayOfPlayersLeft[k]].numIdentifier;
-                    arrayOfWinners[k-2] = board.player[arrayOfPlayersLeft[k-1]].numIdentifier;
+                    arrayOfWinners[k-1] = board.player[arrayOfPlayersLeft[k-1]].numIdentifier;
                 }
             }
             printf("The winners are ");
@@ -132,6 +126,12 @@ void whoWins(struct boardManager board, struct rulesProperties rules, int numPla
                 printf("Player %d ", arrayOfWinners[i]);
             }
             printf("\n");
+        }
+
+        printf("\n");
+
+        for(int i = 0; i < numPlayers; i++) {
+            printf("%d: $%d\n", i, board.player[i].netWorth);
         }
 
     }
