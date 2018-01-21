@@ -60,11 +60,14 @@ int main(int argc, char** argv) {
     }
     int i = 0;
 
-    while(i < rules.turnLimit && rules.turnLimit != -1) {
+    while(!gameIsOver(rules.turnLimit, i ,rules.numOfPlayerToEndGame , /*num of players still in*/)) {
         if(board.player[i % numOfPlayers].inGame == true) {
             getMove(board, rules, numOfPlayers, numOfSpaces, i % numOfPlayers, &randNum);
         }
         i++;
     }
+
+
+    whoWins(board, numOfPlayers, numOfProperties);
     return 0;
 }

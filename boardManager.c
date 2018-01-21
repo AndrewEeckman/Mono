@@ -47,6 +47,7 @@ void readInBoard(struct boardManager *board, char* fileName, int *numOfPropertie
     int rentWHousePos = 15;
     int rentWHotelPos = 16;
 
+
     *numOfProperties = atoi(arrayOfFile[1]) - 1; // Number of properties without GO.
     *numOfProperties = atoi(arrayOfFile[1]) - 1; // Number of properties without GO.
     *numOfSpaces = *numOfProperties + 1;
@@ -95,7 +96,7 @@ void displayBoard(struct boardManager board, int numOfSpaces, int numOfPlayers) 
         printf("%d ", i);
         if(i == 0){
             printf("| %s |\t\t\t", board.boardSpace[i].spaceType.goType.name);
-        } else {
+        } else Of
             printf("| %s |\t\t", board.boardSpace[i].spaceType.propertyType.name);
         }
 

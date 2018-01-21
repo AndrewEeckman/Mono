@@ -62,3 +62,36 @@ bool changeToBool(char * string){
     }
     return false;
 }
+
+bool gameIsOver(int turnLimit, int currentTurnNumber, int numPlayersToWin, int currentPlayers){
+    if(turnLimit == currentTurnNumber){
+        return false;
+    } else if (numPlayersToWin == currentPlayers) {
+        return true;
+    } else {
+        return false ;
+    }
+}
+
+void whoWins(struct boardManager board, int numPlayers, int numOfProperties) {
+    //Add up there net worth
+    int playerValue[numPlayers];
+    for (int j = 1; j <= numOfProperties; j++) {
+        if (board.boardSpace[j].spaceType.propertyType.owned == 1) {
+            playerValue[board.boardSpace[j].spaceType.propertyType.ownedBy] =
+                    playerValue[board.boardSpace[j].spaceType.propertyType.ownedBy] +
+                    board.boardSpace[j].spaceType.propertyType.cost;
+        }
+    }
+    for (int i = 0; i < numPlayers; i++) {
+        playerValue[i] = playerValue[i] + board.player[i].cashAmount;
+    }
+
+
+}
+
+    //Check what players are still in
+    //Print the top three
+
+
+
