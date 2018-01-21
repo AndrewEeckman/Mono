@@ -123,8 +123,8 @@ void inspectPlayer(struct boardManager board, struct rulesProperties rules, int 
 void leaveGame(struct boardManager board, struct rulesProperties rules, int numOfPlayers, int numOfSpaces, int player) {
     board.player[player].inGame = false;
 
-    board.player[player].numIdentifier = NULL;
-    board.player[player].boardPosition = NULL;
+    board.player[player].numIdentifier = (int)NULL;
+    board.player[player].boardPosition = (int)NULL;
     board.player[player].netWorth = 0;
     board.player[player].cashAmount = 0;
     board.player[player].propertySlots = NULL;
