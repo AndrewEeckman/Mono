@@ -8,6 +8,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+//FIXME: REWORK FILE
+
 void readInBoard(struct boardManager *board, char* fileName, int *numOfProperties, int *numOfSpaces) {
     char charStorage[10000];
     char characterPlaceholder;
