@@ -20,29 +20,26 @@ struct rulesProperties {
 
 struct boardManager {
     struct boardSpace { //array
-        struct spaceType {
-            struct goType {
-                char *type;
-                int earnings;
-                char *name;
-            }goType;
-            struct propertyType {
-                char *type;
-                int setID;
-                int intraID;
-                char *name;
-                int cost;
-                int houseCost;
-                int hotelCost;
-                int rent;
-                int rentWHouse;
-                int rentWHotel;
+        struct goType {
+            char *type;
+            int earnings;
+            char *name;
+        }goType;
+        struct propertyType {
+            char *type;
+            int setID;
+            int intraID;
+            char *name;
+            int cost;
+            int houseCost;
+            int hotelCost;
+            int rent;
+            int rentWHouse;
+            int rentWHotel;
 
-                bool owned;
-                int ownedBy;
-            }propertyType;
-
-        }spaceType;
+            bool owned;
+            int ownedBy;
+        }propertyType;
 
     }*boardSpace;
 

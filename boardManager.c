@@ -61,21 +61,21 @@ void readInBoard(struct boardManager *board, char* fileName, int *numOfPropertie
         // Storing names
 
         if(i == 0) {
-            (*board).boardSpace[0].spaceType.goType.name = arrayOfFile[15];
-            (*board).boardSpace[0].spaceType.goType.earnings = atoi(arrayOfFile[14]);
+            (*board).boardSpace[0].goType.name = arrayOfFile[15];
+            (*board).boardSpace[0].goType.earnings = atoi(arrayOfFile[14]);
         } else {
-            (*board).boardSpace[i].spaceType.propertyType.setID = atoi(arrayOfFile[setIDPos]);
-            (*board).boardSpace[i].spaceType.propertyType.intraID = atoi(arrayOfFile[intraSetIDPos]);
-            (*board).boardSpace[i].spaceType.propertyType.name = arrayOfFile[namePos];
-            (*board).boardSpace[i].spaceType.propertyType.cost = atoi(arrayOfFile[costPos]);
-            (*board).boardSpace[i].spaceType.propertyType.houseCost = atoi(arrayOfFile[houseCostPos]);      //NOT USING / WORKING
-            (*board).boardSpace[i].spaceType.propertyType.hotelCost = atoi(arrayOfFile[hotelCostPos]);      //NOT USING / WORKING
-            (*board).boardSpace[i].spaceType.propertyType.rent = atoi(arrayOfFile[rentPos]);
-            (*board).boardSpace[i].spaceType.propertyType.rentWHouse = atoi(arrayOfFile[rentWHousePos]);    //NOT USING / WORKING
-            (*board).boardSpace[i].spaceType.propertyType.rentWHotel = atoi(arrayOfFile[rentWHotelPos]);    //NOT USING / WORKING
+            (*board).boardSpace[i].propertyType.setID = atoi(arrayOfFile[setIDPos]);
+            (*board).boardSpace[i].propertyType.intraID = atoi(arrayOfFile[intraSetIDPos]);
+            (*board).boardSpace[i].propertyType.name = arrayOfFile[namePos];
+            (*board).boardSpace[i].propertyType.cost = atoi(arrayOfFile[costPos]);
+            (*board).boardSpace[i].propertyType.houseCost = atoi(arrayOfFile[houseCostPos]);      //NOT USING / WORKING
+            (*board).boardSpace[i].propertyType.hotelCost = atoi(arrayOfFile[hotelCostPos]);      //NOT USING / WORKING
+            (*board).boardSpace[i].propertyType.rent = atoi(arrayOfFile[rentPos]);
+            (*board).boardSpace[i].propertyType.rentWHouse = atoi(arrayOfFile[rentWHousePos]);    //NOT USING / WORKING
+            (*board).boardSpace[i].propertyType.rentWHotel = atoi(arrayOfFile[rentWHotelPos]);    //NOT USING / WORKING
 
-            (*board).boardSpace[i].spaceType.propertyType.owned = false;
-            (*board).boardSpace[i].spaceType.propertyType.ownedBy = (int)NULL;
+            (*board).boardSpace[i].propertyType.owned = false;
+            (*board).boardSpace[i].propertyType.ownedBy = (int)NULL;
         }
         // Increase values inside file
         namePos += 9;
@@ -94,9 +94,9 @@ void displayBoard(struct boardManager board, int numOfSpaces, int numOfPlayers) 
     for(int i = 0; i < numOfSpaces; i++) {
         printf("%d ", i);
         if(i == 0){
-            printf("| %s |\t\t\t", board.boardSpace[i].spaceType.goType.name);
+            printf("| %s |\t\t\t", board.boardSpace[i].goType.name);
         } else {
-            printf("| %s |\t\t", board.boardSpace[i].spaceType.propertyType.name);
+            printf("| %s |\t\t", board.boardSpace[i].propertyType.name);
         }
 
 
