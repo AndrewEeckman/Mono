@@ -20,7 +20,21 @@ int main(int argc, char** argv) {
     /* FIXME: FIX READ IN FUNCTIONS
     readInBoard(argv[2], &numOfSpaces);
     readInRules(argv[1], &rules);
-
+    */
+    /*
+   struct rulesProperties {
+    int startingCash;
+    int turnLimit;
+    int numOfPlayerToEndGame;
+    int propertySetMultiplier;
+    int numHousesBeforeHotels;
+    bool buildHousesEvenly;         //NOT USING
+    bool putMoneyInFreeParking;     //NOT USING
+    bool auctionProperties;         //NOT USING
+    int salMultiLandingOnGo;
+};
+    */
+    /*
     printf("\n-----RULES-----\n\n");
 
     printf("Starting Cash: %d\n", rules.startingCash);
@@ -58,13 +72,18 @@ int main(int argc, char** argv) {
     //TEST CASES FOR WHEN FILE READING ISN'T WORKING PROPERLY
 
 
-    int numOfSpaces = 5;
+    //int numOfSpaces = 5;
 
     struct rulesProperties rules;
 
-    struct boardManager board;
+    //struct boardManager board;
 
+    readInRules(argv[1], &rules);
 
+    int *randNum;
+    readInRand(argv[3], &randNum);
+
+    /*
     rules.startingCash = 1500;
     rules.turnLimit = 10;
     rules.numOfPlayerToEndGame = 1;
@@ -74,11 +93,13 @@ int main(int argc, char** argv) {
     rules.putMoneyInFreeParking = false;
     rules.auctionProperties = true;
     rules.salMultiLandingOnGo = 1;
+     */
+
+    /*
 
     int numOfProperties = 0;
 
     readInBoard(&board, argv[2], &numOfProperties, &numOfSpaces);
-
 
     int numOfPlayers = 0;
     int propertyRatio = numOfSpaces/3;
@@ -110,11 +131,17 @@ int main(int argc, char** argv) {
     int i = 0;
 
     while(i < rules.turnLimit) {
+<<<<<<< HEAD
         if(board.player[i % numOfPlayers].inGame == true) {
             getMove(board, rules, numOfPlayers, numOfSpaces, i % numOfPlayers);
         }
+=======
+        displayBoard(board, numOfSpaces, numOfPlayers);
+        getMove(board, numOfPlayers, numOfSpaces, i % numOfPlayers, &randNum);
+>>>>>>> 9c1681dc78e7f410e4c99fb5c7e027d0f4203c7d
         i++;
     }
 
     return 0;
+    */
 }
