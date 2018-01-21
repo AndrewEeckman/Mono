@@ -96,7 +96,7 @@ void displayBoard(struct boardManager board, int numOfSpaces, int numOfPlayers) 
         printf("%d ", i);
         if(i == 0){
             printf("| %s |\t\t\t", board.boardSpace[i].spaceType.goType.name);
-        } else {
+        } else Of
             printf("| %s |\t\t", board.boardSpace[i].spaceType.propertyType.name);
         }
 
