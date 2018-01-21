@@ -23,8 +23,8 @@ struct boardManager {
         struct spaceType {
             struct goType {
                 char *type;
-                int setID;
-                char *intraID;
+                int earnings;
+                char *name;
             }goType;
             struct propertyType {
                 char *type;
@@ -37,6 +37,9 @@ struct boardManager {
                 int rent;
                 int rentWHouse;
                 int rentWHotel;
+
+                bool owned;
+                int ownedBy;
             }propertyType;
 
         }spaceType;
@@ -49,6 +52,8 @@ struct boardManager {
         int netWorth;
         int boardPosition;
         char **propertiesOwned;
+
+        bool inGame;
 
     }*player;
 }boardManager;

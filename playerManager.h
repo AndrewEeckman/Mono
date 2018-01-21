@@ -11,5 +11,6 @@
 void getMove(struct boardManager board, int numOfPlayers, int numOfSpaces, int player);
 void movePlayer(struct boardManager board, int player, int numOfSpaces);
 void readInRand(char * argv, int ** randNum);
+void inspectPlayer(struct boardManager board, int numOfPlayers, int numOfSpaces, int player);
 
 #endif //HOARDING_PLAYERMANAGER_H
