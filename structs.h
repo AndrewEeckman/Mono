@@ -51,7 +51,8 @@ struct boardManager {
         int cashAmount;
         int netWorth;
         int boardPosition;
-        char **propertiesOwned;
+        char **propertySlots;
+        struct propertyType *propertiesOwned;
 
         bool inGame;
 
