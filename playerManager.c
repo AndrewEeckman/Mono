@@ -7,23 +7,14 @@
 #include <stdio.h>
 #include "structs.h"
 
-<<<<<<< HEAD
-void getMove(struct boardManager board, struct rulesProperties rules, int numOfPlayers, int numOfSpaces, int player) {
-=======
-void getMove(struct boardManager board, int numOfPlayers, int numOfSpaces, int player, int ** randNum) {
->>>>>>> 9c1681dc78e7f410e4c99fb5c7e027d0f4203c7d
+void getMove(struct boardManager board, struct rulesProperties rules, int numOfPlayers, int numOfSpaces, int player, int ** randNum) {
     int playerAction = 0;
 
     bool turnOver = false;
     bool rolled = false;
 
-<<<<<<< HEAD
     while(turnOver == false) {
         displayBoard(board, numOfSpaces, numOfPlayers);
-=======
-    if(playerAction == 1) {
-        movePlayer(board, player, numOfSpaces, randNum);
->>>>>>> 9c1681dc78e7f410e4c99fb5c7e027d0f4203c7d
 
         printf("\nPlayer %d please choose an action\n", player);
         if(rolled == false) printf("1: Roll Dice\n2: Inspect Player\n3: Leave Game\nYour action: ");
@@ -32,7 +23,7 @@ void getMove(struct boardManager board, int numOfPlayers, int numOfSpaces, int p
         scanf("%d", &playerAction);
 
         if (playerAction == 1 && rolled == false) {
-            movePlayer(board, rules, player, numOfSpaces);
+            movePlayer(board, rules, player, numOfSpaces, randNum);
             rolled = true;
 
         } else if(playerAction == 1 && rolled == true) {
@@ -48,9 +39,6 @@ void getMove(struct boardManager board, int numOfPlayers, int numOfSpaces, int p
     }
 }
 
-<<<<<<< HEAD
-void inspectPlayer(struct boardManager board, struct rulesProperties rules, int numOfPlayers, int numOfSpaces, int player) {
-=======
 void readInRand(char * argv, int ** randNum) {
     FILE *fp;
     int i = 0;
@@ -74,8 +62,44 @@ void readInRand(char * argv, int ** randNum) {
     *randNum = realloc(*randNum, i * sizeof(int));
 }
 
-void inspectPlayer(struct boardManager board, int numOfPlayers, int numOfSpaces, int player) {
->>>>>>> 9c1681dc78e7f410e4c99fb5c7e027d0f4203c7d
+void movePlayer(struct boardManager board, struct rulesProperties rules, int player, int numOfSpaces, int ** randNum) {
+
+    int diceRoll1 = ((*randNum)[0] % 6) + 1;
+    for(int i = 0; i < sizeof((*randNum)); i ++){
+        (*randNum)[i]= (*randNum)[i+1];
+    }
+    *randNum = realloc(*randNum, (sizeof(*randNum)-1) * sizeof(int));
+
+    int diceRoll2 = ((*randNum)[0] % 6) + 1;
+    //Delete the random number just used from the array
+    for(int i = 0; i < sizeof((*randNum)); i ++){
+        (*randNum)[i]= (*randNum)[i+1];
+    }
+    *randNum = realloc(*randNum, (sizeof(*randNum)-1) * sizeof(int));
+
+    int diceRoll = diceRoll1 + diceRoll2;
+
+    printf("You rolled a %d\n", diceRoll);
+
+    if(diceRoll + board.player[player].boardPosition < numOfSpaces) {
+        board.player[player].boardPosition = board.player[player].boardPosition + diceRoll;
+
+    } else if(diceRoll + board.player[player].boardPosition >= numOfSpaces) {
+        board.player[player].boardPosition = (diceRoll + board.player[player].boardPosition) % numOfSpaces;
+
+        if(board.player[player].boardPosition == 0) {
+            board.player[player].cashAmount += (board.boardSpace[0].spaceType.goType.earnings * rules.salMultiLandingOnGo);
+        } else {
+            board.player[player].cashAmount += board.boardSpace[0].spaceType.goType.earnings;
+        }
+
+    } else {
+        board.player[player].boardPosition = numOfSpaces-1;
+    }
+}
+
+void inspectPlayer(struct boardManager board, struct rulesProperties rules, int numOfPlayers, int numOfSpaces, int player) {
+
     int playerToBeInspected = 0;
 
     printf("Which player would you like to inspect?\n");
@@ -96,47 +120,6 @@ void inspectPlayer(struct boardManager board, int numOfPlayers, int numOfSpaces,
     }
 }
 
-<<<<<<< HEAD
-void movePlayer(struct boardManager board, struct rulesProperties rules, int player, int numOfSpaces) {
-    int diceRoll = (rand() % 12) + 1;
-=======
-void movePlayer(struct boardManager board, int player, int numOfSpaces, int ** randNum) {
-    int diceRoll1 = ((*randNum)[0] % 6) + 1;
-    for(int i = 0; i < sizeof((*randNum)); i ++){
-        (*randNum)[i]= (*randNum)[i+1];
-    }
-    *randNum = realloc(*randNum, (sizeof(*randNum)-1) * sizeof(int));
-
-    int diceRoll2 = ((*randNum)[0] % 6) + 1;
-    //Delete the random number just used from the array
-    for(int i = 0; i < sizeof((*randNum)); i ++){
-        (*randNum)[i]= (*randNum)[i+1];
-    }
-    *randNum = realloc(*randNum, (sizeof(*randNum)-1) * sizeof(int));
-
-    int diceRoll = diceRoll1 + diceRoll2;
-
->>>>>>> 9c1681dc78e7f410e4c99fb5c7e027d0f4203c7d
-    printf("You rolled a %d\n", diceRoll);
-
-    /*
-    if(diceRoll + board.player[player].boardPosition < numOfSpaces) {
-        board.player[player].boardPosition = board.player[player].boardPosition + diceRoll;
-
-    } else if(diceRoll + board.player[player].boardPosition >= numOfSpaces) {
-        board.player[player].boardPosition = (diceRoll + board.player[player].boardPosition) % numOfSpaces;
-
-        if(board.player[player].boardPosition == 0) {
-            board.player[player].cashAmount += (board.boardSpace[0].spaceType.goType.earnings * rules.salMultiLandingOnGo);
-        } else {
-            board.player[player].cashAmount += board.boardSpace[0].spaceType.goType.earnings;
-        }
-
-    } else {
-        board.player[player].boardPosition = numOfSpaces-1;
-    }
-}
-
 void leaveGame(struct boardManager board, struct rulesProperties rules, int numOfPlayers, int numOfSpaces, int player) {
     board.player[player].inGame = false;
 
@@ -148,11 +131,4 @@ void leaveGame(struct boardManager board, struct rulesProperties rules, int numO
 
     //FIXME: ADD IN NULLIFIER FOR OWNED PROPERTIES
 
-<<<<<<< HEAD
-=======
-    if(board.player[player].boardPosition == 0) {
-        board.player[player].cashAmount;
-    }
-     */
->>>>>>> 9c1681dc78e7f410e4c99fb5c7e027d0f4203c7d
 }
