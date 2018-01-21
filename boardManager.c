@@ -110,7 +110,7 @@ void readInBoard(struct boardManager *board, char* fileName, int *numOfPropertie
     int rentWHousePos = 15;
     int rentWHotelPos = 16;
 
-    Storing total number of properties
+    gStoring total number of properties
     *numOfProperties = atoi(array[1]) - 1; // Number of properties without GO.
     *numOfProperties = atoi(arrayOfFile[1]) - 1; // Number of properties without GO.
     *numOfSpaces = *numOfProperties + 1;
