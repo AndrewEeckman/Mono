@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include "structs.h"
 
-void getMove(struct boardManager board, struct rulesProperties rules, int numOfPlayers, int numOfSpaces, int player, int ** randNum) {
+void getMove(struct boardManager board, struct rulesProperties rules, int numOfPlayers, int numOfSpaces, int player, int ** randNum, int *numOfPlayersLeft) {
     int playerAction = 0;
 
     bool turnOver = false;
@@ -23,7 +23,7 @@ void getMove(struct boardManager board, struct rulesProperties rules, int numOfP
         scanf("%d", &playerAction);
 
         if (playerAction == 1 && rolled == false) {
-            movePlayer(board, rules, player, numOfSpaces, randNum);
+            movePlayer(board, rules, player, numOfSpaces, randNum, &(*numOfPlayersLeft));
             rolled = true;
 
         } else if(playerAction == 1 && rolled == true) {
@@ -33,7 +33,7 @@ void getMove(struct boardManager board, struct rulesProperties rules, int numOfP
             inspectPlayer(board, rules, numOfPlayers, numOfSpaces, player);
 
         } else if (playerAction == 3) {
-            leaveGame(board, rules, numOfSpaces, player);
+            leaveGame(board, rules, numOfSpaces, player, &(*numOfPlayersLeft));
             turnOver = true;
         }
     }
@@ -62,7 +62,7 @@ void readInRand(char * argv, int ** randNum) {
     *randNum = realloc(*randNum, i * sizeof(int));
 }
 
-void movePlayer(struct boardManager board, struct rulesProperties rules, int player, int numOfSpaces, int ** randNum) {
+void movePlayer(struct boardManager board, struct rulesProperties rules, int player, int numOfSpaces, int ** randNum, int *numOfPlayersLeft) {
 
     int diceRoll1 = ((*randNum)[0] % 6) + 1;
     for(int i = 0; i < sizeof((*randNum)); i ++){
@@ -109,7 +109,7 @@ void movePlayer(struct boardManager board, struct rulesProperties rules, int pla
             printf("Player %d went bankrupt to Player %d", player, board.boardSpace[currentPos].spaceType.propertyType.ownedBy);
             board.player[board.boardSpace[currentPos].spaceType.propertyType.ownedBy].cashAmount = board.player[player].cashAmount;
             //FIXME: TRANSFER PROPERTIES OVER TO NEW PLAYER
-            leaveGame(board, rules, numOfSpaces, player);
+            leaveGame(board, rules, numOfSpaces, player, &(*numOfPlayersLeft));
 
         } else {
             board.player[player].cashAmount -= rentOfPos;
@@ -177,7 +177,7 @@ void inspectPlayer(struct boardManager board, struct rulesProperties rules, int 
     printf("\n");
 }
 
-void leaveGame(struct boardManager board, struct rulesProperties rules, int numOfSpaces, int player) {
+void leaveGame(struct boardManager board, struct rulesProperties rules, int numOfSpaces, int player, int *numOfPlayersLeft) {
     board.player[player].inGame = false;
 
     board.player[player].numIdentifier = (int)NULL;
@@ -185,6 +185,8 @@ void leaveGame(struct boardManager board, struct rulesProperties rules, int numO
     board.player[player].netWorth = 0;
     board.player[player].cashAmount = 0;
     board.player[player].propertySlots = NULL;
+
+    (*numOfPlayersLeft)--;
 
     //FIXME: ADD IN NULLIFIER FOR OWNED PROPERTIES
 
