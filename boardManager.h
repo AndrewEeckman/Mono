@@ -8,9 +8,7 @@
 #include <stdbool.h>
 #include "structs.h"
 
-void readInSpaces(char* boardFile, const int numOfSpaces);
-
-void displayBoard(struct boardManager board, int numOfSpaces, int numOfPlayers);
 void readInBoard(struct boardManager *board, char* fileName, int *numOfProperties, int *numOfSpaces);
+void displayBoard(struct boardManager board, int numOfSpaces, int numOfPlayers);
 
 #endif //HOARDING_BOARDMANAGER_H

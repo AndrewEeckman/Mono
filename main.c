@@ -89,9 +89,9 @@ int main(int argc, char** argv) {
     board.player = malloc(numOfPlayers * sizeof(struct player));
 
     for(int a = 0; a < numOfPlayers; a++) {
-        board.player[a].propertiesOwned = (char **) malloc(propertyRatio * sizeof(char *));
+        board.player[a].propertySlots = (char **) malloc(propertyRatio * sizeof(char *));
         for (int b = 0; b < propertyRatio; b++) {
-            board.player[a].propertiesOwned[b] = (char *) malloc(5 * sizeof(char));
+            board.player[a].propertySlots[b] = (char *) malloc(10 * sizeof(char));
 
         }
     }
@@ -101,16 +101,18 @@ int main(int argc, char** argv) {
         board.player[i].netWorth = rules.startingCash;
         board.player[i].boardPosition = 0;
         board.player[i].numIdentifier = i;
+        board.player[i].inGame = true;
 
         for(int j = 0; j < propertyRatio; j++) {
-            board.player[i].propertiesOwned[j] = " ";
+            board.player[i].propertySlots[j] = " ";
         }
     }
     int i = 0;
 
     while(i < rules.turnLimit) {
-        displayBoard(board, numOfSpaces, numOfPlayers);
-        getMove(board, numOfPlayers, numOfSpaces, i % numOfPlayers);
+        if(board.player[i % numOfPlayers].inGame == true) {
+            getMove(board, rules, numOfPlayers, numOfSpaces, i % numOfPlayers);
+        }
         i++;
     }
 

@@ -8,8 +8,9 @@
 #include "boardManager.h"
 #include "structs.h"
 
-void getMove(struct boardManager board, int numOfPlayers, int numOfSpaces, int player);
-void movePlayer(struct boardManager board, int player, int numOfSpaces);
-void inspectPlayer(struct boardManager board, int numOfPlayers, int numOfSpaces, int player);
+void getMove(struct boardManager board, struct rulesProperties rules, int numOfPlayers, int numOfSpaces, int player);
+void movePlayer(struct boardManager board, struct rulesProperties rules, int player, int numOfSpaces);
+void inspectPlayer(struct boardManager board, struct rulesProperties rules, int numOfPlayers, int numOfSpaces, int player);
+void leaveGame(struct boardManager board, struct rulesProperties rules, int numOfPlayers, int numOfSpaces, int player);
 
 #endif //HOARDING_PLAYERMANAGER_H
