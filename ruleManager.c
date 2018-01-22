@@ -86,12 +86,15 @@ void whoWins(struct boardManager board, int numPlayers, int numOfProperties) {
     for (int i = 0; i < numPlayers; i++) {
         playerValue[i] = playerValue[i] + board.player[i].cashAmount;
     }
+    //Check what players are still in
+
+    //Print the top three
+
 
 
 }
 
-    //Check what players are still in
-    //Print the top three
+
 
 
 
