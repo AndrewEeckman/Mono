@@ -13,8 +13,8 @@ void readInRules(char *argv, struct rulesProperties *rules);
 
 bool changeToBool(char* string);
 
-bool gameIsOver(int turnLimit, int currentTurnNumber, int numPlayersToWin, int currentPlayers);
+bool gameIsOver(struct boardManager board, int turnLimit, int currentTurnNumber, int numPlayersToWin, int numOfPlayers, int numOfPlayersLeft);
 
-void whoWins(struct boardManager board, int numPlayers, int numOfProperties);
+void whoWins(struct boardManager board, struct rulesProperties rules, int numPlayers, int numOfPlayersLeft, int numOfProperties);
 
 #endif //HOARDING_RULEMANAGER_H

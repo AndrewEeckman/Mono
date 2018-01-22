@@ -63,35 +63,79 @@ bool changeToBool(char * string){
     return false;
 }
 
-bool gameIsOver(int turnLimit, int currentTurnNumber, int numPlayersToWin, int currentPlayers){
+bool gameIsOver(struct boardManager board, int turnLimit, int currentTurnNumber, int numPlayersToWin, int numOfPlayers, int numOfPlayersLeft) {
+
     if(turnLimit == currentTurnNumber){
-        return false;
-    } else if (numPlayersToWin == currentPlayers) {
+        return true;
+    } else if (numPlayersToWin == numOfPlayersLeft) {
         return true;
     } else {
-        return false ;
+        return false;
     }
 }
 
-void whoWins(struct boardManager board, int numPlayers, int numOfProperties) {
-    //Add up there net worth
-    int playerValue[numPlayers];
-    for (int j = 1; j <= numOfProperties; j++) {
-        if (board.boardSpace[j].spaceType.propertyType.owned == 1) {
-            playerValue[board.boardSpace[j].spaceType.propertyType.ownedBy] =
-                    playerValue[board.boardSpace[j].spaceType.propertyType.ownedBy] +
-                    board.boardSpace[j].spaceType.propertyType.cost;
+void whoWins(struct boardManager board, struct rulesProperties rules, int numPlayers, int numOfPlayersLeft, int numOfProperties) {
+
+    int arrayOfPlayersLeft[numOfPlayersLeft-1];
+    int arrayCounter = 0;
+
+    for(int i = 0; i < numPlayers; i++) {
+        if(board.player[i].inGame == true) {
+            arrayOfPlayersLeft[arrayCounter] = board.player[i].numIdentifier;
+            arrayCounter++;
         }
     }
-    for (int i = 0; i < numPlayers; i++) {
-        playerValue[i] = playerValue[i] + board.player[i].cashAmount;
+
+
+    if(numOfPlayersLeft == 1) {
+
+        printf("The winner is Player %d", arrayOfPlayersLeft[0]);
+        return;
+
+    } else {
+
+
+        for(int j = 0; j < numOfPlayersLeft; j++) {
+            board.player[arrayOfPlayersLeft[j]].netWorth += board.player[arrayOfPlayersLeft[j]].cashAmount;
+        }
+
+        int numOfWinners = 1;
+
+        int maxPlayer = 0;
+
+        for(int k = 1; k < numOfPlayersLeft; k++) {
+            if(board.player[arrayOfPlayersLeft[k]].netWorth > board.player[arrayOfPlayersLeft[maxPlayer]].netWorth) {
+                maxPlayer = board.player[arrayOfPlayersLeft[k]].numIdentifier;
+            } else if(board.player[arrayOfPlayersLeft[k]].netWorth == board.player[arrayOfPlayersLeft[k-1]].netWorth) {
+                numOfWinners++;
+            }
+        }
+
+        if(numOfWinners == 1) {
+            printf("The winner is Player %d", board.player[maxPlayer].numIdentifier);
+        } else {
+            int arrayOfWinners[numOfWinners];
+            for(int k = 1; k < numOfPlayersLeft; k++) {
+                if(board.player[arrayOfPlayersLeft[k]].netWorth == board.player[arrayOfPlayersLeft[k-1]].netWorth) {
+                    arrayOfWinners[k] = board.player[arrayOfPlayersLeft[k]].numIdentifier;
+                    arrayOfWinners[k-1] = board.player[arrayOfPlayersLeft[k-1]].numIdentifier;
+                }
+            }
+            printf("The winners are ");
+
+            for(int i = 0; i < numOfWinners; i++) {
+                printf("Player %d ", arrayOfWinners[i]);
+            }
+            printf("\n");
+        }
+
+        printf("\n");
+
+        for(int i = 0; i < numPlayers; i++) {
+            printf("%d: $%d\n", i, board.player[i].netWorth);
+        }
+
     }
-    //Check what players are still in
-
-    //Print the top three
-
-
-
 }
 
 

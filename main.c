@@ -58,16 +58,18 @@ int main(int argc, char** argv) {
             board.player[i].propertySlots[j] = " ";
         }
     }
-    int i = 0;
 
-    while(!gameIsOver(rules.turnLimit, i ,rules.numOfPlayerToEndGame , /*num of players still in*/)) {
+    int i = 0;
+    int numOfPlayersLeft = numOfPlayers;
+
+    while(!gameIsOver(board, rules.turnLimit, i ,rules.numOfPlayerToEndGame, numOfPlayers, numOfPlayersLeft)) {
         if(board.player[i % numOfPlayers].inGame == true) {
-            getMove(board, rules, numOfPlayers, numOfSpaces, i % numOfPlayers, &randNum);
+            getMove(board, rules, numOfPlayers, numOfSpaces, i % numOfPlayers, &randNum, &numOfPlayersLeft);
         }
         i++;
     }
 
 
-    whoWins(board, numOfPlayers, numOfProperties);
+    whoWins(board, rules, numOfPlayers, numOfPlayersLeft, numOfSpaces-1);
     return 0;
 }
