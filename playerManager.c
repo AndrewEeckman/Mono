@@ -54,7 +54,7 @@ void readInRand(char * argv, int ** randNum) {
     }
 
     while (!(feof(fp))) {
-        fscanf(fp, "%d", &tempNum);
+        fscanf(fp, "%d\n", &tempNum);
         (*randNum)[i] = tempNum;
         i++;
     }
