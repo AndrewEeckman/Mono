@@ -16,7 +16,7 @@ void getMove(struct boardManager board, struct rulesProperties rules, int numOfP
     while(turnOver == false) {
         displayBoard(board, numOfSpaces, numOfPlayers);
 
-        printf("\nPlayer %d please choose an action\n", player);
+        printf("Player %d please choose an action\n", player);
         if(rolled == false) printf("1: Roll Dice\n2: Inspect Player\n3: Leave Game\nYour action: \n");
         if(rolled == true)  printf("1: End Turn\n2: Inspect Player\n3: Leave Game\nYour action: \n");
 
@@ -54,7 +54,7 @@ void readInRand(char * argv, int ** randNum) {
     }
 
     while (!(feof(fp))) {
-        fscanf(fp, "%d", &tempNum);
+        fscanf(fp, "%d\n", &tempNum);
         (*randNum)[i] = tempNum;
         i++;
     }
