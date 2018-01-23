@@ -18,13 +18,17 @@ struct rulesProperties {
 };
 
 
+
+
 struct boardManager {
     struct boardSpace { //array
+
         struct goType {
             char *type;         //NOT USING
             int earnings;
             char *name;
         }goType;
+
         struct propertyType {
             char *type;         //NOT USING
             int setID;

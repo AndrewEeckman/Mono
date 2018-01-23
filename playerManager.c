@@ -79,7 +79,7 @@ void movePlayer(struct boardManager board, struct rulesProperties rules, int pla
 
     int diceRoll = diceRoll1 + diceRoll2;
 
-    printf("You rolled a %d\n", diceRoll);
+    printf("You rolled a %d!\n", diceRoll);
 
     if(diceRoll + board.player[player].boardPosition < numOfSpaces) {
         board.player[player].boardPosition = board.player[player].boardPosition + diceRoll;
@@ -90,7 +90,11 @@ void movePlayer(struct boardManager board, struct rulesProperties rules, int pla
         if(board.player[player].boardPosition == 0) {
             board.player[player].cashAmount += (board.boardSpace[0].goType.earnings * rules.salMultiLandingOnGo);
         } else {
-            board.player[player].cashAmount += board.boardSpace[0].goType.earnings;
+            int numTimesAroundGo = (board.player[player].boardPosition + diceRoll) / numOfSpaces;
+
+            for(int i = 0; i < numTimesAroundGo; i++) {
+                board.player[player].cashAmount += board.boardSpace[0].goType.earnings;
+            }
         }
 
     } else {
@@ -109,9 +113,11 @@ void movePlayer(struct boardManager board, struct rulesProperties rules, int pla
                 //nothing because the player is paying themselves
             } else {
                 int setMulti = 1; //Checks to see if the property set is owned by one person
-                for(int position = 0; position < numOfSpaces; position++){
-                    if(board.boardSpace[position].propertyType.setID == board.boardSpace[currentPos].propertyType.setID) {
-                        if (board.boardSpace[currentPos].propertyType.ownedBy == board.boardSpace[position].propertyType.ownedBy) {
+                for (int position = 0; position < numOfSpaces; position++) {
+                    if (board.boardSpace[position].propertyType.setID ==
+                        board.boardSpace[currentPos].propertyType.setID) {
+                        if (board.boardSpace[currentPos].propertyType.ownedBy ==
+                            board.boardSpace[position].propertyType.ownedBy) {
                             setMulti = rules.propertySetMultiplier;
                         } else {
                             setMulti = 1;
@@ -131,16 +137,15 @@ void movePlayer(struct boardManager board, struct rulesProperties rules, int pla
                     }
 
                     leaveGame(board, rules, numOfSpaces, player, &(*numOfPlayersLeft));
-
                 } else {
                     board.player[player].cashAmount -= (rentOfPos * setMulti);
-                    board.player[board.boardSpace[currentPos].propertyType.ownedBy].cashAmount += (rentOfPos * setMulti);
+                    board.player[board.boardSpace[currentPos].propertyType.ownedBy].cashAmount += (rentOfPos *
+                                                                                                   setMulti);
                     printf("Player %d payed Player %d $%d for landing on %s\n", player,
                            board.boardSpace[currentPos].propertyType.ownedBy, (rentOfPos * setMulti),
                            board.boardSpace[currentPos].propertyType.name);
                 }
             }
-
         } else if (board.boardSpace[currentPos].propertyType.owned == false) {
             if (board.boardSpace[currentPos].propertyType.cost > board.player[player].cashAmount) {
                 printf("Player %d you do not have enough money to purchase %s\n", player,
