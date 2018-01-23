@@ -8,15 +8,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-//FIXME: REWORK FILE
-
 void readInBoard(struct boardManager *board, char* fileName, int *numOfProperties, int *numOfSpaces) {
-    // Array of chars large enough to take in the entirety of the file
-    char charStorage[10000];
 
-    // Variables for file reading
     FILE *fp;
-    int i = 0;
 
     // Attempt to open file
     fp = fopen(fileName, "r");
@@ -26,15 +20,23 @@ void readInBoard(struct boardManager *board, char* fileName, int *numOfPropertie
         return;
     }
 
+    // Array of chars large enough to take in the entirety of the file
+    char charStorage[10000];
+
+    int i = 0;
+
     // If file is opened, scan through the file until the end is detected
     while (!feof(fp)) {
         fscanf(fp, "%c", &charStorage[i]);
         i++;
     }
 
+    i = 0;
+
     //Declare secondary array of chars to take in file contents
     char *arrayOfFile[10000];
     char *tokenScanned = strtok(charStorage, ",");
+
     i = 0;
 
     //Cut up file into tokens
@@ -42,6 +44,8 @@ void readInBoard(struct boardManager *board, char* fileName, int *numOfPropertie
         arrayOfFile[i++] = tokenScanned;
         tokenScanned = strtok(NULL, ",");
     }
+
+    i = 0;
 
     // Define initial location of all necessary variables in struct boardSpace
     //int typeIDPos = 7;
@@ -63,14 +67,19 @@ void readInBoard(struct boardManager *board, char* fileName, int *numOfPropertie
     (*board).boardSpace = malloc(*numOfSpaces * sizeof(struct boardSpace));
 
     // Storing
-    for (i = 0; i <= *numOfProperties; i++) {
+    for (; i <= *numOfProperties; i++) {
 
         if(i == 0) {
+            // Reading Values for the Go Space
             (*board).boardSpace[0].goType.name = arrayOfFile[15];
             (*board).boardSpace[0].goType.earnings = atoi(arrayOfFile[14]);
         } else {
+            // Reading Values for Property Spaces
+            // Value reading for ID Sets
             (*board).boardSpace[i].propertyType.setID = atoi(arrayOfFile[setIDPos]);
-            (*board).boardSpace[i].propertyType.intraID = atoi(arrayOfFile[intraSetIDPos]);
+            (*board).boardSpace[i].propertyType.intraID = atoi(arrayOfFile[intraSetIDPos]); // FIXME: CONVERT LATER TO ARRAY
+
+            // Property Characteristics (Unique)
             (*board).boardSpace[i].propertyType.name = arrayOfFile[namePos];
             (*board).boardSpace[i].propertyType.cost = atoi(arrayOfFile[costPos]);
             (*board).boardSpace[i].propertyType.houseCost = atoi(arrayOfFile[houseCostPos]);      //NOT USING / WORKING
@@ -79,19 +88,28 @@ void readInBoard(struct boardManager *board, char* fileName, int *numOfPropertie
             (*board).boardSpace[i].propertyType.rentWHouse = atoi(arrayOfFile[rentWHousePos]);    //NOT USING / WORKING
             (*board).boardSpace[i].propertyType.rentWHotel = atoi(arrayOfFile[rentWHotelPos]);    //NOT USING / WORKING
 
-            (*board).boardSpace[i].propertyType.owned = false;
+            // Property Owned Characteristics
+            (*board).boardSpace[i].propertyType.owned = false; // FIXME: TRY TO TRANSFER TO PLAYER STRUCT LATER
             (*board).boardSpace[i].propertyType.ownedBy = -1;
         }
-        // Increase values inside file
-        namePos += 9;
-        costPos += 9;
-        rentPos += 9;
 
-        // Increase values for property ID and setID
+        // Increase values for the property ID and setID of the next one
+        //type += 9
         setIDPos += 9;
         intraSetIDPos += 9;
+
+        // Increase values for the property characteristics of the next property
+        namePos += 9;
+        costPos += 9;
+        houseCostPos += 9;
+        hotelCostPos += 9;
+        rentPos += 9;
+        rentWHousePos += 9;
+        rentWHotelPos += 9;
+
     }
 
+    //Close File
     fclose(fp);
 }
 
