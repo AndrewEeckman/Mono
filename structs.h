@@ -21,21 +21,21 @@ struct rulesProperties {
 struct boardManager {
     struct boardSpace { //array
         struct goType {
-            char *type;
+            char *type;         //NOT USING
             int earnings;
             char *name;
         }goType;
         struct propertyType {
-            char *type;
+            char *type;         //NOT USING
             int setID;
-            int intraID;
+            int intraID;        //NOT USING
             char *name;
             int cost;
-            int houseCost;
-            int hotelCost;
+            int houseCost;      //NOT USING
+            int hotelCost;      //NOT USING
             int rent;
-            int rentWHouse;
-            int rentWHotel;
+            int rentWHouse;     //NOT USING
+            int rentWHotel;     //NOT USING
 
             bool owned;
             int ownedBy;
