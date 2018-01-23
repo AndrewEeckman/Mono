@@ -69,6 +69,7 @@ int main(int argc, char** argv) {
         i++;
     }
 
+    displayBoard(board, numOfSpaces, numOfPlayers);
 
     whoWins(board, rules, numOfPlayers, numOfPlayersLeft, numOfSpaces-1);
     return 0;

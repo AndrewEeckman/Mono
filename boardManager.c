@@ -11,34 +11,42 @@
 //FIXME: REWORK FILE
 
 void readInBoard(struct boardManager *board, char* fileName, int *numOfProperties, int *numOfSpaces) {
+    // Array of chars large enough to take in the entirety of the file
     char charStorage[10000];
-    char characterPlaceholder;
 
+    // Variables for file reading
     FILE *fp;
     int i = 0;
-    int j = 0;
 
+    // Attempt to open file
     fp = fopen(fileName, "r");
 
+    if(fp == NULL) {
+        printf("Failed to open file: %s", fileName);
+        return;
+    }
+
+    // If file is opened, scan through the file until the end is detected
     while (!feof(fp)) {
-        fscanf(fp, "%c", &characterPlaceholder);
-        charStorage[i] = characterPlaceholder;
+        fscanf(fp, "%c", &charStorage[i]);
         i++;
     }
 
-    char *tokenScanned = strtok(charStorage, ",");
+    //Declare secondary array of chars to take in file contents
     char *arrayOfFile[10000];
+    char *tokenScanned = strtok(charStorage, ",");
     i = 0;
 
+    //Cut up file into tokens
     while (tokenScanned != NULL) {
         arrayOfFile[i++] = tokenScanned;
         tokenScanned = strtok(NULL, ",");
-        j++;
     }
 
+    // Define initial location of all necessary variables in struct boardSpace
+    //int typeIDPos = 7;
     int setIDPos = 8;
     int intraSetIDPos = 9;
-
     int namePos = 10;
     int costPos = 11;
     int houseCostPos = 12;
@@ -47,18 +55,15 @@ void readInBoard(struct boardManager *board, char* fileName, int *numOfPropertie
     int rentWHousePos = 15;
     int rentWHotelPos = 16;
 
-    *numOfProperties = atoi(arrayOfFile[1]) - 1; // Number of properties without GO.
+    // Find number of spaces and properties existing within the file
     *numOfProperties = atoi(arrayOfFile[1]) - 1; // Number of properties without GO.
     *numOfSpaces = *numOfProperties + 1;
 
+    // Allocate space for the board based on the number of spaces and properties within the board file
     (*board).boardSpace = malloc(*numOfSpaces * sizeof(struct boardSpace));
 
-    // Storing GO-Name
-     // FIXME - Will the *name pointer store whats in array[15].
-
-    // Storing other values
+    // Storing
     for (i = 0; i <= *numOfProperties; i++) {
-        // Storing names
 
         if(i == 0) {
             (*board).boardSpace[0].goType.name = arrayOfFile[15];

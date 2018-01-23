@@ -1,4 +1,4 @@
-Starting Cash: 100000
+Starting Cash: 1500
 Turn Limit (-1 for no turn limit): -1
 Number of Players Left To End Game: 1
 Property Set Multiplier: 5
