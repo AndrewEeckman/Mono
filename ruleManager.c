@@ -86,6 +86,7 @@ void whoWins(struct boardManager board, struct rulesProperties rules, int numPla
         }
     }
 
+
     if(numOfPlayersLeft == 1) {
 
         printf("The winners are \nPlayer %d", arrayOfPlayersLeft[0]);
@@ -131,8 +132,7 @@ void whoWins(struct boardManager board, struct rulesProperties rules, int numPla
     }
 }
 
-    //Check what players are still in
-    //Print the top three
+
 
 
 
