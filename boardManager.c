@@ -21,27 +21,27 @@ void readInBoard(struct boardManager *board, char* fileName, int *numOfPropertie
     }
 
     // Array of chars large enough to take in the entirety of the file
-    char charStorage[10000];
+    char fileCharacters[10000];
 
     int i = 0;
 
     // If file is opened, scan through the file until the end is detected
     while (!feof(fp)) {
-        fscanf(fp, "%c", &charStorage[i]);
+        fscanf(fp, "%c", &fileCharacters[i]);
         i++;
     }
 
     i = 0;
 
     //Declare secondary array of chars to take in file contents
-    char *arrayOfFile[10000];
-    char *tokenScanned = strtok(charStorage, ",");
+    char *fileConverted[10000];
+    char *tokenScanned = strtok(fileCharacters, ",");
 
     i = 0;
 
     //Cut up file into tokens
     while (tokenScanned != NULL) {
-        arrayOfFile[i++] = tokenScanned;
+        fileConverted[i++] = tokenScanned;
         tokenScanned = strtok(NULL, ",");
     }
 
@@ -59,54 +59,55 @@ void readInBoard(struct boardManager *board, char* fileName, int *numOfPropertie
     int rentWHousePos = 15;
     int rentWHotelPos = 16;
 
+    int nextSpaceNum = 9;
+
     // Find number of spaces and properties existing within the file
-    *numOfProperties = atoi(arrayOfFile[1]) - 1; // Number of properties without GO.
+    *numOfProperties = atoi(fileConverted[1]) - 1; // Number of properties without GO.
     *numOfSpaces = *numOfProperties + 1;
 
     // Allocate space for the board based on the number of spaces and properties within the board file
     (*board).boardSpace = malloc(*numOfSpaces * sizeof(struct boardSpace));
 
     // Storing
-    for (; i <= *numOfProperties; i++) {
+    while(i <= *numOfProperties) {
 
         if(i == 0) {
             // Reading Values for the Go Space
-            (*board).boardSpace[0].goType.name = arrayOfFile[15];
-            (*board).boardSpace[0].goType.earnings = atoi(arrayOfFile[14]);
+            (*board).boardSpace[0].goType.name = fileConverted[15];
+            (*board).boardSpace[0].goType.earnings = atoi(fileConverted[14]);
         } else {
             // Reading Values for Property Spaces
             // Value reading for ID Sets
-            (*board).boardSpace[i].propertyType.setID = atoi(arrayOfFile[setIDPos]);
-            (*board).boardSpace[i].propertyType.intraID = atoi(arrayOfFile[intraSetIDPos]); // FIXME: CONVERT LATER TO ARRAY
+            (*board).boardSpace[i].propertyType.setID = atoi(fileConverted[setIDPos]);
+            (*board).boardSpace[i].propertyType.intraID = atoi(fileConverted[intraSetIDPos]); // FIXME: CONVERT LATER TO ARRAY
 
             // Property Characteristics (Unique)
-            (*board).boardSpace[i].propertyType.name = arrayOfFile[namePos];
-            (*board).boardSpace[i].propertyType.cost = atoi(arrayOfFile[costPos]);
-            (*board).boardSpace[i].propertyType.houseCost = atoi(arrayOfFile[houseCostPos]);      //NOT USING / WORKING
-            (*board).boardSpace[i].propertyType.hotelCost = atoi(arrayOfFile[hotelCostPos]);      //NOT USING / WORKING
-            (*board).boardSpace[i].propertyType.rent = atoi(arrayOfFile[rentPos]);
-            (*board).boardSpace[i].propertyType.rentWHouse = atoi(arrayOfFile[rentWHousePos]);    //NOT USING / WORKING
-            (*board).boardSpace[i].propertyType.rentWHotel = atoi(arrayOfFile[rentWHotelPos]);    //NOT USING / WORKING
+            (*board).boardSpace[i].propertyType.name = fileConverted[namePos];
+            (*board).boardSpace[i].propertyType.cost = atoi(fileConverted[costPos]);
+            (*board).boardSpace[i].propertyType.houseCost = atoi(fileConverted[houseCostPos]);      //NOT USING / WORKING
+            (*board).boardSpace[i].propertyType.hotelCost = atoi(fileConverted[hotelCostPos]);      //NOT USING / WORKING
+            (*board).boardSpace[i].propertyType.rent = atoi(fileConverted[rentPos]);
+            (*board).boardSpace[i].propertyType.rentWHouse = atoi(fileConverted[rentWHousePos]);    //NOT USING / WORKING
+            (*board).boardSpace[i].propertyType.rentWHotel = atoi(fileConverted[rentWHotelPos]);    //NOT USING / WORKING
 
             // Property Owned Characteristics
             (*board).boardSpace[i].propertyType.owned = false; // FIXME: TRY TO TRANSFER TO PLAYER STRUCT LATER
-            (*board).boardSpace[i].propertyType.ownedBy = -1;
+            (*board).boardSpace[i].propertyType.ownedBy = -1; //(int)NULL
         }
 
-        // Increase values for the property ID and setID of the next one
-        //type += 9
-        setIDPos += 9;
-        intraSetIDPos += 9;
+        // Increase values for next space
+        //type += nextSpaceNum
+        setIDPos += nextSpaceNum;
+        intraSetIDPos += nextSpaceNum;
+        namePos += nextSpaceNum;
+        costPos += nextSpaceNum;
+        houseCostPos += nextSpaceNum;
+        hotelCostPos += nextSpaceNum;
+        rentPos += nextSpaceNum;
+        rentWHousePos += nextSpaceNum;
+        rentWHotelPos += nextSpaceNum;
 
-        // Increase values for the property characteristics of the next property
-        namePos += 9;
-        costPos += 9;
-        houseCostPos += 9;
-        hotelCostPos += 9;
-        rentPos += 9;
-        rentWHousePos += 9;
-        rentWHotelPos += 9;
-
+        i++;
     }
 
     //Close File

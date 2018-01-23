@@ -79,7 +79,7 @@ void movePlayer(struct boardManager board, struct rulesProperties rules, int pla
 
     int diceRoll = diceRoll1 + diceRoll2;
 
-    printf("You rolled a %d\n", diceRoll);
+    printf("You rolled a %d!\n", diceRoll);
 
     if(diceRoll + board.player[player].boardPosition < numOfSpaces) {
         board.player[player].boardPosition = board.player[player].boardPosition + diceRoll;
@@ -90,7 +90,11 @@ void movePlayer(struct boardManager board, struct rulesProperties rules, int pla
         if(board.player[player].boardPosition == 0) {
             board.player[player].cashAmount += (board.boardSpace[0].goType.earnings * rules.salMultiLandingOnGo);
         } else {
-            board.player[player].cashAmount += board.boardSpace[0].goType.earnings;
+            int numTimesAroundGo = (board.player[player].boardPosition + diceRoll) / numOfSpaces;
+
+            for(int i = 0; i < numTimesAroundGo; i++) {
+                board.player[player].cashAmount += board.boardSpace[0].goType.earnings;
+            }
         }
 
     } else {
@@ -120,6 +124,7 @@ void movePlayer(struct boardManager board, struct rulesProperties rules, int pla
                 leaveGame(board, rules, numOfSpaces, player, &(*numOfPlayersLeft));
 
             } else {
+
                 board.player[player].cashAmount -= rentOfPos;
                 board.player[board.boardSpace[currentPos].propertyType.ownedBy].cashAmount += rentOfPos;
                 printf("Player %d payed Player %d $%d for landing on %s\n", player,
