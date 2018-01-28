@@ -7,8 +7,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include <stdbool.h>
 
-#include "struct.h"
+#include "structs.h"
 #include "ruleManager.h"
 
 void readInRules(char * argv, struct rulesProperties *rules) {

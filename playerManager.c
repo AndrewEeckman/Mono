@@ -5,6 +5,7 @@
 #include "playerManager.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdbool.h>
 #include "structs.h"
 
 void getMove(struct boardManager board, struct rulesProperties rules, int numOfPlayers, int numOfSpaces, int player, int ** randNum, int *numOfPlayersLeft) {
@@ -14,6 +15,13 @@ void getMove(struct boardManager board, struct rulesProperties rules, int numOfP
     bool rolled = false;
 
     while(turnOver == false) {
+
+        if(board.player[player].inGame == false) {
+            turnOver = true;
+            printf("\n");
+            continue;
+        }
+
         displayBoard(board, numOfSpaces, numOfPlayers);
 
         printf("Player %d please choose an action\n", player);
@@ -86,12 +94,14 @@ void movePlayer(struct boardManager board, struct rulesProperties rules, int pla
 
     } else if(diceRoll + board.player[player].boardPosition >= numOfSpaces) {
         board.player[player].boardPosition = (diceRoll + board.player[player].boardPosition) % numOfSpaces;
+        int numTimesAroundGo = (board.player[player].boardPosition + diceRoll) / numOfSpaces;
 
         if(board.player[player].boardPosition == 0) {
+            for(int i = 0; i < numTimesAroundGo-1; i++) {
+                board.player[player].cashAmount += board.boardSpace[0].goType.earnings;
+            }
             board.player[player].cashAmount += (board.boardSpace[0].goType.earnings * rules.salMultiLandingOnGo);
         } else {
-            int numTimesAroundGo = (board.player[player].boardPosition + diceRoll) / numOfSpaces;
-
             for(int i = 0; i < numTimesAroundGo; i++) {
                 board.player[player].cashAmount += board.boardSpace[0].goType.earnings;
             }
@@ -137,6 +147,8 @@ void movePlayer(struct boardManager board, struct rulesProperties rules, int pla
                     }
 
                     leaveGame(board, rules, numOfSpaces, player, &(*numOfPlayersLeft));
+                    return;
+
                 } else {
                     board.player[player].cashAmount -= (rentOfPos * setMulti);
                     board.player[board.boardSpace[currentPos].propertyType.ownedBy].cashAmount += (rentOfPos *
@@ -153,7 +165,7 @@ void movePlayer(struct boardManager board, struct rulesProperties rules, int pla
                 printf("%s costs $%d, but you only have $%d", board.boardSpace[currentPos].propertyType.name,
                        board.boardSpace[currentPos].propertyType.cost, board.player[player].cashAmount);
             } else {
-                printf("Player %d would you like to buy %s for $%d\n", player,
+                printf("Player %d would you like to buy %s for $%d?\n", player,
                        board.boardSpace[currentPos].propertyType.name,
                        board.boardSpace[currentPos].propertyType.cost);
                 printf("The rent on this property is $%d\n", rentOfPos);
@@ -180,8 +192,11 @@ void inspectPlayer(struct boardManager board, struct rulesProperties rules, int 
 
     printf("Which player would you like to inspect?\n");
 
+
     for(int i = 0; i < numOfPlayers; i++) {
-        printf("%d for Player %d\n", i, i);
+        if(board.player[i].inGame == true) {
+            printf("%d for Player %d\n", i, i);
+        }
     }
 
     printf("Your choice: ");
@@ -189,8 +204,8 @@ void inspectPlayer(struct boardManager board, struct rulesProperties rules, int 
 
     printf("\n");
     printf("Player %d\n", playerToBeInspected);
-    printf(" Cash: %d\n", board.player[playerToBeInspected].cashAmount);
-    printf(" Properties Owned: \n");
+    printf(" Cash: $%d\n", board.player[playerToBeInspected].cashAmount);
+    printf(" Properties owned \n");
 
     int numOfSets = board.boardSpace[numOfSpaces-1].propertyType.setID + 1;
 
@@ -225,8 +240,8 @@ void inspectPlayer(struct boardManager board, struct rulesProperties rules, int 
 void leaveGame(struct boardManager board, struct rulesProperties rules, int numOfSpaces, int player, int *numOfPlayersLeft) {
     board.player[player].inGame = false;
 
-    board.player[player].numIdentifier = (int)NULL;
-    board.player[player].boardPosition = (int)NULL;
+    board.player[player].numIdentifier = -99;
+    board.player[player].boardPosition = -99;
     board.player[player].netWorth = 0;
     board.player[player].cashAmount = 0;
     board.player[player].propertySlots = NULL;
