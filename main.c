@@ -13,9 +13,12 @@
 //argv[1] = Rules;
 //argv[2] = Board;
 //argv[3] = Random
+void clean(struct boardManager board, int numOfPlayers, int propertyRatio , int ** numArray);
+//void mainGameLoop(struct rulesProperties rules, struct boardManager board);
 
-void clean(struct boardManager board, int numOfPlayers, int propertyRatio , int * numArray){
-    free(numArray);
+void clean(struct boardManager board, int numOfPlayers, int propertyRatio , int ** numArray) {
+    free(*numArray);
+
     for(int i = 0; i < numOfPlayers; i++) {
         free(board.player[i].propertySlots);
     }
