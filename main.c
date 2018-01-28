@@ -14,8 +14,8 @@
 //argv[2] = Board;
 //argv[3] = Random
 
-void clean(struct boardManager board, int numOfPlayers, int propertyRatio , int ** numArray){
-    free(*numArray);
+void clean(struct boardManager board, int numOfPlayers, int propertyRatio , int * numArray){
+    free(numArray);
     for(int i = 0; i < numOfPlayers; i++) {
         free(board.player[i].propertySlots);
     }
@@ -81,6 +81,6 @@ int main(int argc, char** argv) {
     displayBoard(board, numOfSpaces, numOfPlayers);
 
     whoWins(board, rules, numOfPlayers, numOfPlayersLeft, numOfSpaces-1);
-    clean(board, numOfPlayers, propertyRatio, &randNum );
+    clean(board, numOfPlayers, propertyRatio, randNum );
     return 0;
 }
