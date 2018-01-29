@@ -8,7 +8,7 @@
 #include <stdbool.h>
 #include "structs.h"
 
-void getMove(struct boardManager board, struct rulesProperties rules, int numOfPlayers, int numOfSpaces, int player, int ** randNum, int *numOfPlayersLeft) {
+void getMove(struct boardManager board, struct rulesProperties rules, int numOfPlayers, int numOfSpaces, int player, int ** randNum, int *numOfPlayersLeft, int * numInRandArray) {
     int playerAction = 0;
 
     bool turnOver = false;
@@ -31,7 +31,7 @@ void getMove(struct boardManager board, struct rulesProperties rules, int numOfP
         scanf("%d", &playerAction);
 
         if (playerAction == 1 && rolled == false) {
-            movePlayer(board, rules, player, numOfSpaces, randNum, &(*numOfPlayersLeft));
+            movePlayer(board, rules, player, numOfSpaces, randNum, &(*numOfPlayersLeft), numInRandArray);
             rolled = true;
 
         } else if(playerAction == 1 && rolled == true) {
@@ -47,7 +47,7 @@ void getMove(struct boardManager board, struct rulesProperties rules, int numOfP
     }
 }
 
-void readInRand(char * argv, int ** randNum) {
+int readInRand(char * argv, int ** randNum) {
     FILE *fp;
     int i = 0;
     int tempNum;
@@ -66,24 +66,27 @@ void readInRand(char * argv, int ** randNum) {
         (*randNum)[i] = tempNum;
         i++;
     }
+    return i;
 
-    *randNum = realloc(*randNum, i * sizeof(int));
+    //*randNum = realloc(*randNum, i * sizeof(int));
 }
 
-void movePlayer(struct boardManager board, struct rulesProperties rules, int player, int numOfSpaces, int ** randNum, int *numOfPlayersLeft) {
+void movePlayer(struct boardManager board, struct rulesProperties rules, int player, int numOfSpaces, int ** randNum, int *numOfPlayersLeft, int * numInRandArray) {
 
     int diceRoll1 = ((*randNum)[0] % 6) + 1;
-    for(int i = 0; i < sizeof((*randNum)); i ++){
+    for(int i = 0; i < *numInRandArray; i ++){
         (*randNum)[i]= (*randNum)[i+1];
     }
-    *randNum = realloc(*randNum, (sizeof(*randNum)-1) * sizeof(int));
+    *numInRandArray = *numInRandArray -1;
+    *randNum = realloc(*randNum, (*numInRandArray) * sizeof(int));
 
     int diceRoll2 = ((*randNum)[0] % 6) + 1;
     //Delete the random number just used from the array
-    for(int i = 0; i < sizeof((*randNum)); i ++){
+    for(int i = 0; i < *numInRandArray; i ++){
         (*randNum)[i]= (*randNum)[i+1];
     }
-    *randNum = realloc(*randNum, (sizeof(*randNum)-1) * sizeof(int));
+    *numInRandArray = *numInRandArray -1;
+    *randNum = realloc(*randNum, (*numInRandArray) * sizeof(int));
 
     int diceRoll = diceRoll1 + diceRoll2;
 

@@ -36,7 +36,7 @@ int main(int argc, char** argv) {
     readInRules(argv[1], &rules);
 
     int *randNum;
-    readInRand(argv[3], &randNum);
+    int numInRandArray = readInRand(argv[3], &randNum);
 
     int numOfSpaces = 0;
     int numOfProperties = 0;
@@ -76,7 +76,7 @@ int main(int argc, char** argv) {
 
     while(!gameIsOver(board, rules.turnLimit, i ,rules.numOfPlayerToEndGame, numOfPlayers, numOfPlayersLeft)) {
         if(board.player[i % numOfPlayers].inGame == true) {
-            getMove(board, rules, numOfPlayers, numOfSpaces, i % numOfPlayers, &randNum, &numOfPlayersLeft);
+            getMove(board, rules, numOfPlayers, numOfSpaces, i % numOfPlayers, &randNum, &numOfPlayersLeft, &numInRandArray);
         }
         i++;
     }
@@ -84,6 +84,6 @@ int main(int argc, char** argv) {
     displayBoard(board, numOfSpaces, numOfPlayers);
 
     whoWins(board, rules, numOfPlayers, numOfPlayersLeft, numOfSpaces-1);
-    clean(board, numOfPlayers, propertyRatio, randNum );
+    clean(board, numOfPlayers, propertyRatio, &randNum );
     return 0;
 }
