@@ -134,7 +134,10 @@ void movePlayer(struct boardManager board, struct rulesProperties rules, int pla
                             setMulti = rules.propertySetMultiplier;
                         } else {
                             setMulti = 1;
+                            break;
                         }
+                    } else {
+                        //this is the else statment for the check for set ID
                     }
                 }
 
